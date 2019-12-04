@@ -15,6 +15,7 @@ import (
 	"net/http"
 	"net/url"
 	"os"
+	"path"
 	"path/filepath"
 	"strconv"
 	"strings"
@@ -130,13 +131,19 @@ var (
 )
 
 var (
-	// pictureTemplateHeader = `<ac:structured-macro ac:name=\"view-file\" ac:schema-version=\"1\" ac:macro-id=\"88888888-8888-8888-8888-888888888888\"><ac:parameter ac:name=\"name\"><ri:attachment ri:filename=\"`
-	// // attachment file name
-	// pictureTemplateFooter = `\" /></ac:parameter><ac:parameter ac:name=\"height\">250</ac:parameter></ac:structured-macro>`
+	tableOfContent = `<ac:structured-macro ac:name=\"toc\" ac:schema-version=\"1\" ac:macro-id=\"88888888-8888-8888-8888-888888888888\" />`
 )
 
 var (
-	drawioTemplateHeader = `<ac:structured-macro ac:name=\"drawio\" ac:schema-version=\"1\" ac:macro-id=\"88888888-8888-8888-8888-888888888888\"><ac:parameter ac:name=\"border\">true</ac:parameter><ac:parameter ac:name=\"viewerToolbar\">true</ac:parameter><ac:parameter ac:name=\"fitWindow\">false</ac:parameter><ac:parameter ac:name=\"diagramName\">`
+// pictureTemplateHeader = `<ac:structured-macro ac:name=\"view-file\" ac:schema-version=\"1\" ac:macro-id=\"88888888-8888-8888-8888-888888888888\"><ac:parameter ac:name=\"name\"><ri:attachment ri:filename=\"`
+// // attachment file name
+// pictureTemplateFooter = `\" /></ac:parameter><ac:parameter ac:name=\"height\">250</ac:parameter></ac:structured-macro>`
+)
+
+var (
+	drawioTemplateTitle = `<h1>`
+	// attachment file name
+	drawioTemplateHeader = `</h1><ac:structured-macro ac:name=\"drawio\" ac:schema-version=\"1\" ac:macro-id=\"88888888-8888-8888-8888-888888888888\"><ac:parameter ac:name=\"border\">true</ac:parameter><ac:parameter ac:name=\"viewerToolbar\">true</ac:parameter><ac:parameter ac:name=\"fitWindow\">false</ac:parameter><ac:parameter ac:name=\"diagramName\">`
 	// attachment file name
 	drawioTemplateInner = `</ac:parameter><ac:parameter ac:name=\"simpleViewer\">false</ac:parameter><ac:parameter ac:name=\"width\" /><ac:parameter ac:name=\"diagramWidth\">480</ac:parameter><ac:parameter ac:name=\"revision\">`
 	// attachment revision
@@ -144,13 +151,17 @@ var (
 )
 
 var (
-	plantumlTemplateHeader = `<ac:structured-macro ac:name=\"plantuml\" ac:schema-version=\"1\" ac:macro-id=\"88888888-8888-8888-8888-888888888888\"><ac:parameter ac:name=\"atlassian-macro-output-type\">INLINE</ac:parameter><ac:plain-text-body><![CDATA[`
+	plantumlTemplateTitle = `<h1>`
+	// plantuml file name
+	plantumlTemplateHeader = `</h1><ac:structured-macro ac:name=\"plantuml\" ac:schema-version=\"1\" ac:macro-id=\"88888888-8888-8888-8888-888888888888\"><ac:parameter ac:name=\"atlassian-macro-output-type\">INLINE</ac:parameter><ac:plain-text-body><![CDATA[`
 	// plantuml file content
 	plantumlTemplateFooter = `]]></ac:plain-text-body></ac:structured-macro>`
 )
 
 var (
-	markdownTemplateHeader = `<ac:structured-macro ac:name=\"markdown\" ac:schema-version=\"1\" ac:macro-id=\"88888888-8888-8888-8888-888888888888\"><ac:plain-text-body><![CDATA[`
+	markdownTemplateTitle = `<h1>`
+	// markdown file name
+	markdownTemplateHeader = `</h1><ac:structured-macro ac:name=\"markdown\" ac:schema-version=\"1\" ac:macro-id=\"88888888-8888-8888-8888-888888888888\"><ac:plain-text-body><![CDATA[`
 	// markdown file content
 	markdownTemplateFooter = `]]></ac:plain-text-body></ac:structured-macro>`
 )
@@ -344,6 +355,7 @@ func processPage(pd *pageDetail) (err error) {
 
 	// build update payload
 	var paylodBuilder strings.Builder
+	paylodBuilder.WriteString(tableOfContent)
 	for _, content := range pd.Contents {
 		switch content.Type {
 		case ContentTypeDrawio.String():
@@ -435,11 +447,13 @@ func handleDrawioAttachment(filePath string, ppc *pageProcessContext) (fileName,
 }
 
 func getDrawioContent(fileName, attaVersion string) (body string) {
-	return fmt.Sprintf("%s%s%s%s%s", drawioTemplateHeader, fileName, drawioTemplateInner, attaVersion, drawioTemplateFooter)
+	title := filenameWithoutExtension(fileName)
+	return fmt.Sprintf("%s%s%s%s%s%s%s", drawioTemplateTitle, title, drawioTemplateHeader, fileName, drawioTemplateInner, attaVersion, drawioTemplateFooter)
 }
 
 func getPlantumlContent(filePath string) (body string, err error) {
 	handlerName := "getPlantumlContent"
+	title := filenameWithoutExtension(filePath)
 	var plantumlBuilder strings.Builder
 	plantumlFile, errOpen := os.Open(filePath)
 	if errOpen != nil {
@@ -459,11 +473,12 @@ func getPlantumlContent(filePath string) (body string, err error) {
 		err = errors.New(fmt.Sprintf("[%s] scanner err: %+v", handlerName, errScan))
 		return
 	}
-	return fmt.Sprintf("%s%s%s", plantumlTemplateHeader, plantumlBuilder.String(), plantumlTemplateFooter), nil
+	return fmt.Sprintf("%s%s%s%s%s", plantumlTemplateTitle, title, plantumlTemplateHeader, plantumlBuilder.String(), plantumlTemplateFooter), nil
 }
 
 func getMarkdownContent(filePath string) (body string, err error) {
 	handlerName := "getMarkdownContent"
+	title := filenameWithoutExtension(filePath)
 	var markdownBuilder strings.Builder
 	markdownFile, errOpen := os.Open(filePath)
 	if errOpen != nil {
@@ -483,7 +498,7 @@ func getMarkdownContent(filePath string) (body string, err error) {
 		err = errors.New(fmt.Sprintf("[%s] scanner err: %+v", handlerName, errScan))
 		return
 	}
-	return fmt.Sprintf("%s%s%s", markdownTemplateHeader, markdownBuilder.String(), markdownTemplateFooter), nil
+	return fmt.Sprintf("%s%s%s%s%s", markdownTemplateTitle, title, markdownTemplateHeader, markdownBuilder.String(), markdownTemplateFooter), nil
 }
 
 func getRequestContent(parameter interface{}) (body string, err error) {
@@ -687,4 +702,10 @@ func apiUploadOrUpdatePageAttachment(contentId, attachmentId, filePath, fileName
 		err = errors.New(fmt.Sprintf("[%s] code not 200, res body: %s", handlerName, string(resBody)))
 	}
 	return
+}
+
+// https://siongui.github.io/2018/02/25/go-get-file-name-without-extension/
+func filenameWithoutExtension(fp string) string {
+	fn := filepath.Base(fp)
+	return strings.TrimSuffix(fn, path.Ext(fn))
 }
