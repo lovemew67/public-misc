@@ -707,5 +707,22 @@ func apiUploadOrUpdatePageAttachment(contentId, attachmentId, filePath, fileName
 // https://siongui.github.io/2018/02/25/go-get-file-name-without-extension/
 func filenameWithoutExtension(fp string) string {
 	fn := filepath.Base(fp)
+	if !isWord(path.Ext(fn)) {
+		return fn
+	}
 	return strings.TrimSuffix(fn, path.Ext(fn))
+}
+
+// https://stackoverflow.com/questions/38554353/how-to-check-if-a-string-only-contains-alphabetic-characters-in-go/38554480#38554480
+func isLetter(c rune) bool {
+	return ('a' <= c && c <= 'z') || ('A' <= c && c <= 'Z')
+}
+
+func isWord(s string) bool {
+	for _, c := range s {
+		if !isLetter(c) {
+			return false
+		}
+	}
+	return true
 }
