@@ -372,7 +372,6 @@ func processPage(pd *pageDetail) (err error) {
 			}
 			body := getDrawioContent(fileName, attaVersion)
 			paylodBuilder.WriteString(body)
-			break
 		case ContentTypePlantuml.String():
 			body, errGet := getPlantumlContent(content.Source)
 			if errGet != nil {
@@ -380,7 +379,6 @@ func processPage(pd *pageDetail) (err error) {
 				return
 			}
 			paylodBuilder.WriteString(body)
-			break
 		case ContentTypeMarkdown.String():
 			body, errGet := getMarkdownContent(content.Source)
 			if errGet != nil {
@@ -388,7 +386,6 @@ func processPage(pd *pageDetail) (err error) {
 				return
 			}
 			paylodBuilder.WriteString(body)
-			break
 		default:
 			break
 		}
@@ -463,7 +460,7 @@ func getPlantumlContent(filePath string) (body string, err error) {
 	var plantumlBuilder strings.Builder
 	plantumlFile, errOpen := os.Open(filePath)
 	if errOpen != nil {
-		err = errors.New(fmt.Sprintf("[%s] failed to open file, err: %+v", handlerName, errOpen))
+		err = fmt.Errorf("[%s] failed to open file, err: %+v", handlerName, errOpen)
 		return
 	}
 	defer plantumlFile.Close()
@@ -476,7 +473,7 @@ func getPlantumlContent(filePath string) (body string, err error) {
 		plantumlBuilder.WriteString(`\n`)
 	}
 	if errScan := fileScanner.Err(); errScan != nil {
-		err = errors.New(fmt.Sprintf("[%s] scanner err: %+v", handlerName, errScan))
+		err = fmt.Errorf("[%s] scanner err: %+v", handlerName, errScan)
 		return
 	}
 	return fmt.Sprintf("%s%s%s%s%s", plantumlTemplateTitle, title, plantumlTemplateHeader, plantumlBuilder.String(), plantumlTemplateFooter), nil
@@ -488,7 +485,7 @@ func getMarkdownContent(filePath string) (body string, err error) {
 	var markdownBuilder strings.Builder
 	markdownFile, errOpen := os.Open(filePath)
 	if errOpen != nil {
-		err = errors.New(fmt.Sprintf("[%s] failed to open file, err: %+v", handlerName, errOpen))
+		err = fmt.Errorf("[%s] failed to open file, err: %+v", handlerName, errOpen)
 		return
 	}
 	defer markdownFile.Close()
@@ -501,7 +498,7 @@ func getMarkdownContent(filePath string) (body string, err error) {
 		markdownBuilder.WriteString(`\n`)
 	}
 	if errScan := fileScanner.Err(); errScan != nil {
-		err = errors.New(fmt.Sprintf("[%s] scanner err: %+v", handlerName, errScan))
+		err = fmt.Errorf("[%s] scanner err: %+v", handlerName, errScan)
 		return
 	}
 	return fmt.Sprintf("%s%s%s%s%s", markdownTemplateTitle, title, markdownTemplateHeader, markdownBuilder.String(), markdownTemplateFooter), nil
@@ -511,12 +508,12 @@ func getRequestContent(parameter interface{}) (body string, err error) {
 	handlerName := "getRequestContent"
 	t, errParse := template.New(requestTemplateName).Parse(requestTemplate)
 	if errParse != nil {
-		err = errors.New(fmt.Sprintf("[%s] failed parse template, err: %+v", handlerName, errParse))
+		err = fmt.Errorf("[%s] failed parse template, err: %+v", handlerName, errParse)
 		return
 	}
 	buffer := new(bytes.Buffer)
 	if errExecute := t.Execute(buffer, parameter); errExecute != nil {
-		err = errors.New(fmt.Sprintf("[%s] failed execute template, err: %+v", handlerName, errExecute))
+		err = fmt.Errorf("[%s] failed execute template, err: %+v", handlerName, errExecute)
 		return
 	}
 	beforeUnescape := string(buffer.Bytes())
@@ -534,7 +531,7 @@ func apiGetPageMetadata(id string) (version int, title string, err error) {
 	// send request
 	response, errHttp := httpClient.Do(req)
 	if errHttp != nil {
-		err = errors.New(fmt.Sprintf("[%s] failed to send request: %+v", handlerName, errHttp))
+		err = fmt.Errorf("[%s] failed to send request: %+v", handlerName, errHttp)
 		return
 	}
 
@@ -542,16 +539,16 @@ func apiGetPageMetadata(id string) (version int, title string, err error) {
 	defer response.Body.Close()
 	resBody, err := ioutil.ReadAll(response.Body)
 	if err != nil {
-		err = errors.New(fmt.Sprintf("[%s] failed to read response body: %+v", handlerName, err))
+		err = fmt.Errorf("[%s] failed to read response body: %+v", handlerName, err)
 		return
 	}
 	if response.StatusCode != http.StatusOK {
-		err = errors.New(fmt.Sprintf("[%s] code not 200, res body: %s", handlerName, string(resBody)))
+		err = fmt.Errorf("[%s] code not 200, res body: %s", handlerName, string(resBody))
 		return
 	}
 	contentMetadata := getPageResponse{}
 	if err = json.Unmarshal(resBody, &contentMetadata); err != nil {
-		err = errors.New(fmt.Sprintf("[%s] failed to unmarshal response body: %+v", handlerName, err))
+		err = fmt.Errorf("[%s] failed to unmarshal response body: %+v", handlerName, err)
 		return
 	}
 
@@ -571,7 +568,7 @@ func apiGetPageAttachments(id string) (titleMap map[string]*pageProcessAttachmen
 	// send request
 	response, errHttp := httpClient.Do(req)
 	if err != nil {
-		err = errors.New(fmt.Sprintf("[%s] failed to send request: %+v", handlerName, errHttp))
+		err = fmt.Errorf("[%s] failed to send request: %+v", handlerName, errHttp)
 		return
 	}
 
@@ -579,16 +576,16 @@ func apiGetPageAttachments(id string) (titleMap map[string]*pageProcessAttachmen
 	defer response.Body.Close()
 	resBody, err := ioutil.ReadAll(response.Body)
 	if err != nil {
-		err = errors.New(fmt.Sprintf("[%s] failed to read response body: %+v", handlerName, err))
+		err = fmt.Errorf("[%s] failed to read response body: %+v", handlerName, err)
 		return
 	}
 	if response.StatusCode != http.StatusOK {
-		err = errors.New(fmt.Sprintf("[%s] code not 200, res body: %s", handlerName, string(resBody)))
+		err = fmt.Errorf("[%s] code not 200, res body: %s", handlerName, string(resBody))
 		return
 	}
 	contentAttachments := getPageAttachmentsResponse{}
 	if err = json.Unmarshal(resBody, &contentAttachments); err != nil {
-		err = errors.New(fmt.Sprintf("[%s] failed to unmarshal response body: %+v", handlerName, err))
+		err = fmt.Errorf("[%s] failed to unmarshal response body: %+v", handlerName, err)
 		return
 	}
 
@@ -603,12 +600,12 @@ func apiGetPageAttachments(id string) (titleMap map[string]*pageProcessAttachmen
 		downloadLink := atta.Links.Download
 		downloadUrl, errParseUrl := url.Parse(downloadLink)
 		if errParseUrl != nil {
-			err = errors.New(fmt.Sprintf("[%s] failed to parse download link to url, err: %+v", handlerName, errParseUrl))
+			err = fmt.Errorf("[%s] failed to parse download link to url, err: %+v", handlerName, errParseUrl)
 			return
 		}
 		queryMap, errParseQuery := url.ParseQuery(downloadUrl.RawQuery)
 		if errParseQuery != nil {
-			err = errors.New(fmt.Sprintf("[%s] failed to parse query in download url, err: %+v", handlerName, errParseQuery))
+			err = fmt.Errorf("[%s] failed to parse query in download url, err: %+v", handlerName, errParseQuery)
 			return
 		}
 		attachmentVersion := queryMap[version][0]
@@ -629,7 +626,7 @@ func apiUpdatePage(id, body string) (err error) {
 	// send request
 	response, errHttp := httpClient.Do(req)
 	if err != nil {
-		err = errors.New(fmt.Sprintf("[%s] failed to send request: %+v", handlerName, errHttp))
+		err = fmt.Errorf("[%s] failed to send request: %+v", handlerName, errHttp)
 		return
 	}
 
@@ -637,11 +634,11 @@ func apiUpdatePage(id, body string) (err error) {
 	defer response.Body.Close()
 	resBody, err := ioutil.ReadAll(response.Body)
 	if err != nil {
-		err = errors.New(fmt.Sprintf("[%s] failed to read response body: %+v", handlerName, err))
+		err = fmt.Errorf("[%s] failed to read response body: %+v", handlerName, err)
 		return
 	}
 	if response.StatusCode != http.StatusOK {
-		err = errors.New(fmt.Sprintf("[%s] code not 200, res body: %s", handlerName, string(resBody)))
+		err = fmt.Errorf("[%s] code not 200, res body: %s", handlerName, string(resBody))
 	}
 	return
 }
@@ -652,7 +649,7 @@ func apiUploadOrUpdatePageAttachment(contentId, attachmentId, filePath, fileName
 	// process file
 	fp, errOpen := os.Open(filePath)
 	if errOpen != nil {
-		err = errors.New(fmt.Sprintf("[%s] failed to open file, err: %+v", handlerName, errOpen))
+		err = fmt.Errorf("[%s] failed to open file, err: %+v", handlerName, errOpen)
 		return
 	}
 	defer fp.Close()
@@ -660,22 +657,22 @@ func apiUploadOrUpdatePageAttachment(contentId, attachmentId, filePath, fileName
 	writer := multipart.NewWriter(body)
 	part, errCreate := writer.CreateFormFile(formKeyfile, fileName)
 	if errCreate != nil {
-		err = errors.New(fmt.Sprintf("[%s] failed to create form-data header, err: %+v", handlerName, errCreate))
+		err = fmt.Errorf("[%s] failed to create form-data header, err: %+v", handlerName, errCreate)
 		return
 	}
 	_, errCopy := io.Copy(part, fp)
 	if errCopy != nil {
-		err = errors.New(fmt.Sprintf("[%s] failed to copy file to writer, err: %+v", handlerName, errCopy))
+		err = fmt.Errorf("[%s] failed to copy file to writer, err: %+v", handlerName, errCopy)
 		return
 	}
 	errWrite := writer.WriteField(formKeyComment, fmt.Sprintf("file updated at: %s", time.Now().UTC().String()))
 	if errWrite != nil {
-		err = errors.New(fmt.Sprintf("[%s] failed to write form data, err: %+v", handlerName, errWrite))
+		err = fmt.Errorf("[%s] failed to write form data, err: %+v", handlerName, errWrite)
 		return
 	}
 	errClose := writer.Close()
 	if errClose != nil {
-		err = errors.New(fmt.Sprintf("[%s] failed to close writer, err: %+v", handlerName, errClose))
+		err = fmt.Errorf("[%s] failed to close writer, err: %+v", handlerName, errClose)
 		return
 	}
 
@@ -693,7 +690,7 @@ func apiUploadOrUpdatePageAttachment(contentId, attachmentId, filePath, fileName
 	// send request
 	response, errHttp := httpClient.Do(req)
 	if err != nil {
-		err = errors.New(fmt.Sprintf("[%s] failed to send request: %+v", handlerName, errHttp))
+		err = fmt.Errorf("[%s] failed to send request: %+v", handlerName, errHttp)
 		return
 	}
 
@@ -701,11 +698,11 @@ func apiUploadOrUpdatePageAttachment(contentId, attachmentId, filePath, fileName
 	defer response.Body.Close()
 	resBody, err := ioutil.ReadAll(response.Body)
 	if err != nil {
-		err = errors.New(fmt.Sprintf("[%s] failed to read response body: %+v", handlerName, err))
+		err = fmt.Errorf("[%s] failed to read response body: %+v", handlerName, err)
 		return
 	}
 	if response.StatusCode != http.StatusOK {
-		err = errors.New(fmt.Sprintf("[%s] code not 200, res body: %s", handlerName, string(resBody)))
+		err = fmt.Errorf("[%s] code not 200, res body: %s", handlerName, string(resBody))
 	}
 	return
 }
