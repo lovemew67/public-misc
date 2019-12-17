@@ -25,6 +25,12 @@ import (
 	"github.com/spf13/viper"
 )
 
+var (
+	appVersion = "unknown"             // version used for log and info
+	gitCommit = "$Format:%H$"          // sha1 from git, output of $(git rev-parse HEAD)
+	buildDate = "1970-01-01T00:00:00Z" // build date in ISO8601 format, output of $(date -u +'%Y-%m-%dT%H:%M:%SZ')
+)
+
 const (
 	unknown             = "unknown"
 	version             = "version"
