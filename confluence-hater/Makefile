@@ -12,7 +12,7 @@ test:
 	go vet $(SOURCE)
 	go test -mod=vendor -race -cover $(SOURCE)
 
-vendor:
+modvendor:
 	rm -f go.sum
 	GO111MODULE=on go build -v $(SOURCE) 
 	GO111MODULE=on go mod tidy

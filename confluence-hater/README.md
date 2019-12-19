@@ -5,7 +5,7 @@ help engineeeeeeeeeeeeeeers to sync/upload/update markdown/plantuml/drawio conte
 ## prerequisites
 
 - confluences page ids. retrieve page id from `Page Information`: https://<confluence_url>/pages/viewinfo.action?pageId=<page_id>
-- confluecne server must support `Markdown/PlangUML/Draw.io` marcos
+- confluecne server must support "TableOfContent/CodeBlock/Markdown/PlangUML/Draw.io" marcos
 - supported confluence version. tested against:
 ```
 <version>6.2.3</version>
@@ -16,7 +16,7 @@ help engineeeeeeeeeeeeeeers to sync/upload/update markdown/plantuml/drawio conte
 ## usage
 
 ```go
-go run main.go
+go run main.go (-f/--filelog) /path/to/template.json
 ```
 
 ## help
@@ -34,11 +34,14 @@ confluence hater help engineeeeeeeeeeeeeeers to sync/upload/update markdown/plan
 
 prerequisites
 - confluences page ids. retrieve page id from "Page Information": https://<confluence_url>/pages/viewinfo.action?pageId=<page_id>
-- confluecne server must support "Markdown/PlangUML/Draw.io" marcos
+- confluecne server must support "TableOfContent/CodeBlock/Markdown/PlangUML/Draw.io" marcos
 - supported confluence version. tested against:
-        - version: 6.2.3
-        - buildNumber: 7615
-        - applinksVersion: 5.2.6
+	- version: 6.2.3
+	- buildNumber: 7615
+	- applinksVersion: 5.2.6
+- each page will contain a "table of content" marco for hyberlink
+- title will be enclosed by h1 tag
+- description will be enclosed by code block macro
 
 current support content type:
 - drawio   (default width: 480)
@@ -52,31 +55,25 @@ environment variables:
 
 request template:
 {
-    "pages": [
+    "pages": [                                          // required
         {
-            "id": "<page_id>",
-            "contents": [
+            "id": "<page_id>",                          // required
+            "contents": [                               // required
                 {
-                    "type": "drawio",
-                    "source": "path/to/drawio/file"
+					"type": "drawio/markdown/plantuml", // required
+					"title" : "title",                  // required
+					"descrption" : "description",       // required
+                    "source": "path/to/file"            // required
                 },
-                {
-                    "type": "markdown",
-                    "source": "path/to/drawio/file"
-                },
-                {
-                    "type": "plantuml",
-                    "source": "path/to/plantuml/file"
-                                }
-                                ... // content will display in this order
+				... // content will display in this order
             ]
-                }
-                ... // process pages sequently
+		}
+		... // process pages sequently
     ]
 }
 
 Usage:
-  confluence-hater [sync request in json] [flags]
+  confluence-hater [flags] [sync request in json]
 
 Flags:
   -f, --filelog   log to file nor not (default: confluence-hater.log)
@@ -99,6 +96,9 @@ Flags:
 	page: 107316117, with link: https://<confluence_url>/pages/viewpage.action?pageId=<content_id>
 2019/10/27 13:11:22.002290 confluence.go:328: [processPages] failed to process [0] pages:
 ```
+
+## Todo
+- support history to prevent always updte
 
 ## references
 

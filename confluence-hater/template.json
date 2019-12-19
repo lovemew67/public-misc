@@ -1,19 +1,25 @@
 {
     "pages": [
         {
-            "id": "08945794879453",
+            "id": "1234567890",
             "contents": [
                 {
                     "type": "drawio",
-                    "source": "templates/drawio"
-                },
-                {
+                    "source": "templates/drawio",
+                    "title": "drawio title",
+                    "description": "drawio description"
+                }
+                ,{
                     "type": "markdown",
-                    "source": "templates/markdown"
-                },
-                {
+                    "source": "templates/markdown",
+                    "title": "markdown title",
+                    "description": "markdown description"
+                }
+                ,{
                     "type": "plantuml",
-                    "source": "templates/plantuml"
+                    "source": "templates/plantuml",
+                    "title": "plantuml title",
+                    "description": "plantuml description"
                 }
             ]
         }
