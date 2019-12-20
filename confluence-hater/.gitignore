@@ -4,5 +4,6 @@
 # files
 .DS_Store
 *.log
+*.history
 confluence-hater
 confluence-hater.exe

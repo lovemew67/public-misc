@@ -228,6 +228,7 @@ type pageProcessContext struct {
 }
 
 type pageHistories struct {
+	CreatedAt time.Time         `json:"createdAt"`
 	Histories map[string]string `json:"histories"`
 }
 
@@ -357,7 +358,6 @@ func processPages(ppr parsePageRequest) {
 		if errJson != nil {
 			logger.Printf("[%s] failed to unmarshal request file, err: %+v, will create a new one", handlerName, errJson)
 			create = true
-
 		}
 	}
 	if create {
@@ -378,6 +378,7 @@ func processPages(ppr parsePageRequest) {
 	}
 
 	// update history file
+	ph.CreatedAt = time.Now().UTC()
 	marshalJsonAndWriteFile(ph, historyFileName, true)
 
 	// print succeeded
@@ -398,15 +399,32 @@ func processPage(pd *pageDetail, ph pageHistories) (err error) {
 	logger.Printf("[%s] start to process page: %s", handlerName, pd.ID)
 
 	// check history
+	validMD5 := true
 	var md5Builder strings.Builder
 	for _, content := range pd.Contents {
 		md5String, errMD5 := getFileMd5(content.Source)
-		if errMD5 == nil {
+		if errMD5 != nil {
+			logger.Printf("[%s] failed to get md5 for file: %s", handlerName, content.Source)
+			validMD5 = false
+			break
+		} else {
 			md5Builder.WriteString(md5String)
 		}
 	}
-	md5Builder.String()
-	// WIP
+	newMD5 := md5Builder.String()
+	oldMD5, ok := ph.Histories[pd.ID]
+	if validMD5 {
+		if ok && newMD5 == oldMD5 {
+			logger.Printf("[%s] same md5 for file id: %s, no need to process", handlerName, pd.ID)
+			return
+		} else {
+			ph.Histories[pd.ID] = newMD5
+		}
+	} else {
+		if ok {
+			delete(ph.Histories, pd.ID)
+		}
+	}
 
 	// prepare context
 	ppc, err := prepareProcessPageContext(pd)
