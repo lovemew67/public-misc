@@ -1,0 +1,9 @@
+# folder
+.vscode
+
+# files
+.DS_Store
+*.log
+*.history
+simple-server
+simple-server.exe
