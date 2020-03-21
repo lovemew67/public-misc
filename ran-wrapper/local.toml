@@ -1,0 +1,8 @@
+[http]
+  port = "80"
+  tls_port = "443"
+  ran_binary = "./ran_windows_amd64_v0.1.4"
+  cert = "cert.pem"
+  key = "key.pem"
+  encrypt_mode = "both"
+  web_root = "web"

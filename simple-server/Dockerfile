@@ -18,6 +18,7 @@ RUN apk --no-cache add ca-certificates
 COPY --from=builder /go/bin/simple-server .
 
 # Start up server
+COPY local.toml .
 COPY cert.pem .
 COPY key.pem .
 CMD ./simple-server

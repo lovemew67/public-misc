@@ -4,3 +4,4 @@
   mode = "release"
   cert = "cert.pem"
   key = "key.pem"
+  encrypt_mode = "both"
