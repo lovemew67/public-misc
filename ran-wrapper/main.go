@@ -28,6 +28,7 @@ func main() {
 	}
 
 	// run ran server
+	log.Println("starting server")
 	switch viper.GetString("http.encrypt_mode") {
 	case ENCRYPT_MODE_DISABLED:
 		cmd := exec.Command(
