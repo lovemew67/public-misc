@@ -1,4 +1,4 @@
-module github.com/lovemew67/project-misc/simple-server
+module github.com/lovemew67/project-misc/ran-wrapper
 
 go 1.13
 
