@@ -39,7 +39,7 @@ func main() {
 	// init gin router
 	gin.SetMode(viper.GetString("http.mode"))
 	router := gin.Default()
-	router.Any("", func(c *gin.Context) {
+	router.NoRoute(func(c *gin.Context) {
 		s, _ := ioutil.ReadAll(c.Request.Body)
 		c.JSON(200, gin.H{
 			"params":                    c.Params,
