@@ -35,6 +35,7 @@ func main() {
 			viper.GetString("http.ran_binary"),
 			"-r", viper.GetString("http.web_root"),
 			"-p", viper.GetString("http.port"),
+			"-404", "404.html",
 		)
 		cmd.CombinedOutput()
 	case ENCRYPT_MODE_ENABLED:
@@ -45,6 +46,7 @@ func main() {
 			"-key", viper.GetString("http.key"),
 			"-tls-port", viper.GetString("http.tls_port"),
 			"-tls-policy", "only",
+			"-404", "404.html",
 		)
 		cmd.CombinedOutput()
 	case ENCRYPT_MODE_BOTH:
@@ -56,6 +58,7 @@ func main() {
 			"-key", viper.GetString("http.key"),
 			"-tls-port", viper.GetString("http.tls_port"),
 			"-tls-policy", "both",
+			"-404", "404.html",
 		)
 		cmd.CombinedOutput()
 	default:
