@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"log"
@@ -10,6 +11,7 @@ import (
 	"syscall"
 
 	"github.com/gin-gonic/gin"
+	"github.com/lovemew67/project-misc/simple-server/handlerv1"
 	"github.com/spf13/viper"
 )
 
@@ -41,7 +43,7 @@ func main() {
 	router := gin.Default()
 	router.NoRoute(func(c *gin.Context) {
 		s, _ := ioutil.ReadAll(c.Request.Body)
-		c.JSON(200, gin.H{
+		resp := gin.H{
 			"params":                    c.Params,
 			"keys":                      c.Keys,
 			"accepted":                  c.Accepted,
@@ -63,9 +65,16 @@ func main() {
 			"request.remote.addr":       c.Request.RemoteAddr,
 			"request.request.uri":       c.Request.RequestURI,
 			"request.tls":               c.Request.TLS,
-		})
+		}
+		b, _ := json.MarshalIndent(resp, "", "\t")
+		c.Data(200, "text/plain", b)
 	})
 
+	// add handlers
+	rootGroup := router.Group("")
+	handlerv1.AddHTTPEndpoint(rootGroup.Group("/v1"))
+
+	// init server
 	switch viper.GetString("http.encrypt_mode") {
 	case ENCRYPT_MODE_DISABLED:
 		go func() {
