@@ -6,3 +6,5 @@
 *.log
 /go.mod
 /go.sum
+/project-misc
+/project-misc.exe
