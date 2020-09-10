@@ -91,7 +91,7 @@ List<Widget> createList() {
           child: Container(
             padding: EdgeInsets.all(10),
             child: Text(
-              "Graduated from Information Management, National Taiwan University, specialized on Big Data, Cloud Computing, Information and Cloud Security and Virtualization, etc.\n\nPassionate to evolve in the development of Internet of Things and third-party payment in Taiwan.",
+              "A backend developer, gopher from Taiwan, graduated from Information Management, National Taiwan University. Always have a passion for learning and trying out new things. \n\nSpecializing: golang, api developement, cloud-native application, cloud-oriented and micro service",
               style: TextStyle(
                 fontSize: 15,
               ),
@@ -106,13 +106,6 @@ List<Widget> createList() {
     Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        Container(
-          padding: EdgeInsets.all(5),
-          child: new InkWell(
-              child: new Icon(FontAwesomeIcons.envelope),
-              onTap: () => launch('mailto:firecat.zhou@gmail.com')
-          ),
-        ),
         Container(
           padding: EdgeInsets.all(5),
           child: new InkWell(
