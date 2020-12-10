@@ -12,11 +12,11 @@ void main() => runApp(new SampleApp());
 // ================
 
 // mobile, web version
-// void main() => runApp(new RandomWordsApp());
+// void main() => runApp(new SampleApp());
 
 // desktop version
 // void main() {
 //   // https://github.com/flutter/flutter/wiki/Desktop-shells#target-platform-override
 //   // debugDefaultTargetPlatformOverride = TargetPlatform.fuchsia;
-//   runApp(new RandomWordsApp());
+//   runApp(new SampleApp());
 // }
