@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 // import 'package:flutter/foundation.dart' show debugDefaultTargetPlatformOverride;
 
 import 'app/sample.dart';
-// import 'app/random.dart';
 
 // final version
 void main() => runApp(new SampleApp());
