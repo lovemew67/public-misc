@@ -1,0 +1,8 @@
+# folder
+.vscode
+
+# files
+.DS_Store
+*.log
+/golang-sample
+/golang-sample.exe
