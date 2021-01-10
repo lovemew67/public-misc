@@ -1,0 +1,7 @@
+## application specific
+[http]
+  port = "8999"
+  read_timeout = "40s"
+  write_timeout = "40s"
+  client_timeout = "15s"
+  mode = "debug"

@@ -1,0 +1,14 @@
+# IDE
+.idea/
+.vscode/
+
+# Go
+rest-server-0
+rest-server-0.exe
+
+# MAC
+.DS_Store
+*/.DS_Store
+
+# SQLite
+data/
