@@ -9,7 +9,7 @@ type CreateStaffV1ServiceRequest struct {
 }
 
 type GetStaffV1ServiceRequest struct {
-	ID string
+	ID int
 }
 
 type ListStaffV1ServiceRequest struct {
@@ -18,7 +18,7 @@ type ListStaffV1ServiceRequest struct {
 }
 
 type PatchStaffV1ServiceRequest struct {
-	ID string
+	ID int
 
 	Name      *string `json:"name"`
 	Email     *string `json:"email"`
@@ -26,5 +26,5 @@ type PatchStaffV1ServiceRequest struct {
 }
 
 type DeleteStaffV1ServiceRequest struct {
-	ID string
+	ID int
 }

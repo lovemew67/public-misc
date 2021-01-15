@@ -3,6 +3,7 @@ package controllerv1
 import (
 	"fmt"
 	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 	"github.com/lovemew67/cornerstone"
@@ -30,6 +31,7 @@ func createStaffV1Handler(c *gin.Context) {
 		cornerstone.FromCodeErrorWithStatus(c, http.StatusBadRequest, cornerstone.FromNativeError(errBind))
 		return
 	}
+	input.ID = 0
 	err := servicev1.CreateStaffV1Service(input)
 	if err != nil {
 		cornerstone.FromCodeErrorWithStatus(c, http.StatusInternalServerError, cornerstone.FromNativeError(err))
@@ -40,8 +42,9 @@ func createStaffV1Handler(c *gin.Context) {
 
 func getStaffV1Handler(c *gin.Context) {
 	staffID := c.Param(pathID)
+	id, _ := strconv.Atoi(staffID)
 	input := &servicev1.GetStaffV1ServiceRequest{
-		ID: staffID,
+		ID: id,
 	}
 	result, err := servicev1.GetStaffV1Service(input)
 	if err != nil {
@@ -56,6 +59,12 @@ func listStaffV1Handler(c *gin.Context) {
 	if errBind := c.BindQuery(&input); errBind != nil {
 		cornerstone.FromCodeErrorWithStatus(c, http.StatusInternalServerError, cornerstone.FromNativeError(errBind))
 		return
+	}
+	if input.Limit <= 0 {
+		input.Limit = 10
+	}
+	if input.Limit > 200 {
+		input.Limit = 200
 	}
 	results, total, err := servicev1.ListStaffV1Service(input)
 	if err != nil {
@@ -75,7 +84,8 @@ func patchStaffV1Handler(c *gin.Context) {
 		return
 	}
 	staffID := c.Param(pathID)
-	input.ID = staffID
+	id, _ := strconv.Atoi(staffID)
+	input.ID = id
 	err := servicev1.PatchStaffV1Service(input)
 	if err != nil {
 		cornerstone.FromCodeErrorWithStatus(c, http.StatusInternalServerError, cornerstone.FromNativeError(err))
@@ -86,8 +96,9 @@ func patchStaffV1Handler(c *gin.Context) {
 
 func deleteStaffV1Handler(c *gin.Context) {
 	staffID := c.Param(pathID)
+	id, _ := strconv.Atoi(staffID)
 	input := &servicev1.DeleteStaffV1ServiceRequest{
-		ID: staffID,
+		ID: id,
 	}
 	err := servicev1.DeleteStaffV1Service(input)
 	if err != nil {

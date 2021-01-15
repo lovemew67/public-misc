@@ -1,6 +1,8 @@
 package repositoryv1
 
 import (
+	"fmt"
+
 	"github.com/lovemew67/project-misc/rest-server-0/modelv1"
 )
 
@@ -19,13 +21,18 @@ func CountTotalStaff() (result int, err error) {
 	return
 }
 
-func GetStaff(id string) (staff *modelv1.Staff, err error) {
+func GetStaff(id int) (staff *modelv1.Staff, err error) {
 	staffList := make([]*modelv1.Staff, 1)
 	db := sqlitedb
+	db = db.Where("id = ?", id)
 	db = db.Limit(1)
 	db = db.Find(&staffList)
 	err = db.Error
-	staff = staffList[0]
+	if len(staffList) != 0 {
+		staff = staffList[0]
+	} else {
+		err = fmt.Errorf("not found")
+	}
 	return
 }
 
@@ -39,7 +46,7 @@ func QueryAllStaffWithOffsetAndLimit(offset, limit int) (staffList []modelv1.Sta
 	return
 }
 
-func PatchStaff(id string, staff *modelv1.Staff) (err error) {
+func PatchStaff(id int, staff *modelv1.Staff) (err error) {
 	db := sqlitedb
 	db = db.Model(modelv1.Staff{ID: id})
 	db = db.Update(staff)
@@ -47,7 +54,7 @@ func PatchStaff(id string, staff *modelv1.Staff) (err error) {
 	return
 }
 
-func DeleteStaff(id string) (err error) {
+func DeleteStaff(id int) (err error) {
 	staff := modelv1.Staff{ID: id}
 	db := sqlitedb
 	db = db.Delete(modelv1.Staff{}, &staff)
