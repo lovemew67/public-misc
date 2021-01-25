@@ -1,0 +1,35 @@
+## application specific
+[app]
+  namespace = "dev-hk-03"
+
+[http]
+  port = "8999"
+  read_timeout = "40s"
+  write_timeout = "40s"
+  client_timeout = "15s"
+  mode = "release"
+
+[grpc]
+  port = "9599"
+
+[log]
+  output = "Stdout"
+  level = "info"
+  timestamp_format = ""
+  access_level = "debug"
+
+## data layers
+[database]
+[database.mgo.local]
+  name = "zzh-z530"
+  user = "username"
+  password = "password"
+  authdatabase = "admin"
+  max_conn = 4
+  max_idle = 15
+  timeout = "30s"
+  direct = false
+  secondary = false
+  mongos = false
+  auth = true
+  hosts = "172.31.35.41:27017"

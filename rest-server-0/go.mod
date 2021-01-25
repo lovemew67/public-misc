@@ -1,6 +1,6 @@
 module github.com/lovemew67/project-misc/rest-server-0
 
-go 1.14
+go 1.15
 
 require (
 	github.com/gin-gonic/gin v1.6.3
@@ -11,7 +11,7 @@ require (
 	github.com/json-iterator/go v1.1.10 // indirect
 	github.com/kr/text v0.2.0 // indirect
 	github.com/lib/pq v1.9.0 // indirect
-	github.com/lovemew67/cornerstone v0.0.0-20210112144517-3c16eb233610
+	github.com/lovemew67/cornerstone v0.0.0-20210126074432-90e3e7288cd8
 	github.com/pelletier/go-toml v1.8.1 // indirect
 	github.com/spf13/cast v1.3.1 // indirect
 	github.com/spf13/cobra v1.1.1

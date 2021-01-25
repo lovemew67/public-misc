@@ -2,7 +2,6 @@ package controllerv1
 
 import (
 	"fmt"
-	"net/http"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
@@ -28,16 +27,16 @@ func addHTTPV1Endpoint(rootGroup *gin.RouterGroup) {
 func createStaffV1Handler(c *gin.Context) {
 	input := &servicev1.CreateStaffV1ServiceRequest{}
 	if errBind := c.ShouldBindJSON(input); errBind != nil {
-		cornerstone.FromCodeErrorWithStatus(c, http.StatusBadRequest, cornerstone.FromNativeError(errBind))
+		cornerstone.FromCodeErrorWithStatus(c, cornerstone.FromNativeError(errBind))
 		return
 	}
 	input.ID = 0
 	err := servicev1.CreateStaffV1Service(input)
 	if err != nil {
-		cornerstone.FromCodeErrorWithStatus(c, http.StatusInternalServerError, cornerstone.FromNativeError(err))
+		cornerstone.FromCodeErrorWithStatus(c, cornerstone.FromNativeError(err))
 		return
 	}
-	cornerstone.DoneWithStatus(c, http.StatusOK, nil)
+	cornerstone.DoneWithStatus(c, nil)
 }
 
 func getStaffV1Handler(c *gin.Context) {
@@ -48,16 +47,16 @@ func getStaffV1Handler(c *gin.Context) {
 	}
 	result, err := servicev1.GetStaffV1Service(input)
 	if err != nil {
-		cornerstone.FromCodeErrorWithStatus(c, http.StatusInternalServerError, cornerstone.FromNativeError(err))
+		cornerstone.FromCodeErrorWithStatus(c, cornerstone.FromNativeError(err))
 		return
 	}
-	cornerstone.DoneWithStatus(c, http.StatusOK, result)
+	cornerstone.DoneWithStatus(c, result)
 }
 
 func listStaffV1Handler(c *gin.Context) {
 	input := &servicev1.ListStaffV1ServiceRequest{}
 	if errBind := c.BindQuery(&input); errBind != nil {
-		cornerstone.FromCodeErrorWithStatus(c, http.StatusInternalServerError, cornerstone.FromNativeError(errBind))
+		cornerstone.FromCodeErrorWithStatus(c, cornerstone.FromNativeError(errBind))
 		return
 	}
 	if input.Limit <= 0 {
@@ -68,10 +67,10 @@ func listStaffV1Handler(c *gin.Context) {
 	}
 	results, total, err := servicev1.ListStaffV1Service(input)
 	if err != nil {
-		cornerstone.FromCodeErrorWithStatus(c, http.StatusInternalServerError, cornerstone.FromNativeError(err))
+		cornerstone.FromCodeErrorWithStatus(c, cornerstone.FromNativeError(err))
 		return
 	}
-	cornerstone.DoneWithStatus(c, http.StatusOK, gin.H{
+	cornerstone.DoneWithStatus(c, gin.H{
 		"staff": results,
 		"total": total,
 	})
@@ -80,7 +79,7 @@ func listStaffV1Handler(c *gin.Context) {
 func patchStaffV1Handler(c *gin.Context) {
 	input := &servicev1.PatchStaffV1ServiceRequest{}
 	if errBind := c.ShouldBindJSON(input); errBind != nil {
-		cornerstone.FromCodeErrorWithStatus(c, http.StatusInternalServerError, cornerstone.FromNativeError(errBind))
+		cornerstone.FromCodeErrorWithStatus(c, cornerstone.FromNativeError(errBind))
 		return
 	}
 	staffID := c.Param(pathID)
@@ -88,10 +87,10 @@ func patchStaffV1Handler(c *gin.Context) {
 	input.ID = id
 	err := servicev1.PatchStaffV1Service(input)
 	if err != nil {
-		cornerstone.FromCodeErrorWithStatus(c, http.StatusInternalServerError, cornerstone.FromNativeError(err))
+		cornerstone.FromCodeErrorWithStatus(c, cornerstone.FromNativeError(err))
 		return
 	}
-	cornerstone.DoneWithStatus(c, http.StatusOK, nil)
+	cornerstone.DoneWithStatus(c, nil)
 }
 
 func deleteStaffV1Handler(c *gin.Context) {
@@ -102,8 +101,8 @@ func deleteStaffV1Handler(c *gin.Context) {
 	}
 	err := servicev1.DeleteStaffV1Service(input)
 	if err != nil {
-		cornerstone.FromCodeErrorWithStatus(c, http.StatusInternalServerError, cornerstone.FromNativeError(err))
+		cornerstone.FromCodeErrorWithStatus(c, cornerstone.FromNativeError(err))
 		return
 	}
-	cornerstone.DoneWithStatus(c, http.StatusOK, nil)
+	cornerstone.DoneWithStatus(c, nil)
 }
