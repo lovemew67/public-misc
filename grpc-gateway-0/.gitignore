@@ -1,0 +1,12 @@
+# IDE
+.idea/
+.vscode/
+.scannerwork/
+
+# Go
+grpc-gateway-0
+grpc-gateway-0.exe
+
+# MAC
+.DS_Store
+*/.DS_Store
