@@ -58,7 +58,7 @@ func NewAPIServerCmd() *cobra.Command {
 				}
 			}()
 
-			// init grpc server
+			// init grpc gateway
 			grpcGatewayPort := viper.GetString("grpc.gateway_port")
 			grpcGateway := controllerv1.InitEchoGrpcGateway(systemCtx, grpcPort, grpcGatewayPort)
 			defer func() {

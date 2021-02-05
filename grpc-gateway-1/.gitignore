@@ -1,0 +1,14 @@
+# IDE
+.idea/
+.vscode/
+
+# Go
+grpc-gateway-1
+grpc-gateway-1.exe
+
+# MAC
+.DS_Store
+*/.DS_Store
+
+# SQLite
+data/

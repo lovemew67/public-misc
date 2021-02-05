@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package proto;
+
+option go_package = ".;proto";
+
+message StaffV1 {
+  // @inject_tag: json:"id" bson:"id" gorm:"column:id;primary_key"
+  string id = 1;
+
+  // @inject_tag: json:"created" bson:"created,omitempty" gorm:"column:created"
+  int64 created = 2;
+
+  // @inject_tag: json:"updated" bson:"updated,omitempty" gorm:"column:updated;index:updated"
+  int64 updated = 3;
+
+  // @inject_tag: json:"name,omitempty" bson:"name,omitempty" gorm:"column:name"
+  string name = 4;
+
+  // @inject_tag: json:"email,omitempty" bson:"email,omitempty" gorm:"column:email"
+  string email = 5;
+
+  // @inject_tag: json:"avatar_url,omitempty" bson:"avatar_url,omitempty" gorm:"column:avatar_url"
+  string avatar_url = 6;
+}

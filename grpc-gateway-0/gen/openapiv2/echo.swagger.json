@@ -117,14 +117,14 @@
   "securityDefinitions": {
     "bearer": {
       "type": "apiKey",
-      "description": "m800-uims authorization token, prefixed by Bearer: Bearer \u003ctoken\u003e",
+      "description": "authorization token, prefixed by Bearer: Bearer \u003ctoken\u003e",
       "name": "Authorization",
       "in": "header"
     },
     "eid": {
       "type": "apiKey",
       "description": "eid",
-      "name": "x-m800-eid",
+      "name": "x-eid",
       "in": "header"
     }
   },

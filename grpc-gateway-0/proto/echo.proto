@@ -33,7 +33,7 @@ option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
       value: {
         type: TYPE_API_KEY
         in: IN_HEADER
-        name: "x-m800-eid"
+        name: "x-eid"
         description: "eid"
       }
     }
@@ -43,7 +43,7 @@ option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
         type: TYPE_API_KEY
         in: IN_HEADER
         name: "Authorization"
-        description: "m800-uims authorization token, prefixed by Bearer: Bearer <token>"
+        description: "authorization token, prefixed by Bearer: Bearer <token>"
       }
     }
   }

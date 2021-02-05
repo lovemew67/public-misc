@@ -1,0 +1,5 @@
+#!/bin/bash
+
+./mockgen_1.4.4 -source=./repositoryv1/iface.go -destination=./repositoryv1mock/iface_mock.go -package=repositoryv1mock
+
+./mockgen_1.4.4 -source=./servicev1/iface.go -destination=./servicev1mock/iface_mock.go -package=servicev1mock

@@ -1,0 +1,373 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "staff_service.proto",
+    "version": "1.0"
+  },
+  "host": "localhost:9699",
+  "schemes": [
+    "http"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/staff": {
+      "get": {
+        "summary": "List staff",
+        "description": "List all staff on the server.",
+        "operationId": "StaffServiceV1_ListStaffV1",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/protoListStaffV1Response"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "tags": [
+          "Staff"
+        ],
+        "security": []
+      },
+      "post": {
+        "summary": "Add a staff",
+        "description": "Add a staff to the server.",
+        "operationId": "StaffServiceV1_CreateStaffV1",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/protoCreateStaffV1Response"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/protoCreateStaffV1Request"
+            }
+          }
+        ],
+        "tags": [
+          "Staff"
+        ],
+        "security": []
+      }
+    },
+    "/v1/staff/{id}": {
+      "get": {
+        "summary": "Deletes a staff by their ID",
+        "description": "Deletes a staff from the server.",
+        "operationId": "StaffServiceV1_DeleteStaffV1",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/protoDeleteStaffV1Response"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Staff"
+        ],
+        "security": []
+      },
+      "patch": {
+        "summary": "Update a staff",
+        "description": "Change properties of a staff.",
+        "operationId": "StaffServiceV1_PatchStaffV1",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/protoPatchStaffV1Response"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/protoPatchStaffV1Request"
+            }
+          }
+        ],
+        "tags": [
+          "Staff"
+        ],
+        "security": []
+      }
+    }
+  },
+  "definitions": {
+    "protoCreateStaffV1Request": {
+      "type": "object",
+      "properties": {
+        "staff": {
+          "$ref": "#/definitions/protoStaffV1"
+        }
+      }
+    },
+    "protoCreateStaffV1Response": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "subCode": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "errorMessage": {
+          "type": "string"
+        },
+        "staff": {
+          "$ref": "#/definitions/protoStaffV1"
+        }
+      }
+    },
+    "protoDeleteStaffV1Response": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "subCode": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "errorMessage": {
+          "type": "string"
+        }
+      }
+    },
+    "protoGetStaffV1Response": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "subCode": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "errorMessage": {
+          "type": "string"
+        },
+        "staff": {
+          "$ref": "#/definitions/protoStaffV1"
+        }
+      }
+    },
+    "protoListStaffV1Response": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "subCode": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "errorMessage": {
+          "type": "string"
+        },
+        "total": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "staff": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protoStaffV1"
+          }
+        }
+      }
+    },
+    "protoPatchStaffV1Request": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "avatarUrl": {
+          "type": "string"
+        }
+      }
+    },
+    "protoPatchStaffV1Response": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "subCode": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "errorMessage": {
+          "type": "string"
+        }
+      }
+    },
+    "protoStaffV1": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "@inject_tag: json:\"id\" bson:\"id\" gorm:\"column:id;primary_key\""
+        },
+        "created": {
+          "type": "string",
+          "format": "int64",
+          "title": "@inject_tag: json:\"created\" bson:\"created,omitempty\" gorm:\"column:created\""
+        },
+        "updated": {
+          "type": "string",
+          "format": "int64",
+          "title": "@inject_tag: json:\"updated\" bson:\"updated,omitempty\" gorm:\"column:updated;index:updated\""
+        },
+        "name": {
+          "type": "string",
+          "title": "@inject_tag: json:\"name,omitempty\" bson:\"name,omitempty\" gorm:\"column:name\""
+        },
+        "email": {
+          "type": "string",
+          "title": "@inject_tag: json:\"email,omitempty\" bson:\"email,omitempty\" gorm:\"column:email\""
+        },
+        "avatarUrl": {
+          "type": "string",
+          "title": "@inject_tag: json:\"avatar_url,omitempty\" bson:\"avatar_url,omitempty\" gorm:\"column:avatar_url\""
+        }
+      }
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "typeUrl": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string",
+          "format": "byte"
+        }
+      }
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    }
+  },
+  "securityDefinitions": {
+    "bearer": {
+      "type": "apiKey",
+      "description": "authorization token, prefixed by Bearer: Bearer \u003ctoken\u003e",
+      "name": "Authorization",
+      "in": "header"
+    },
+    "eid": {
+      "type": "apiKey",
+      "description": "eid",
+      "name": "x-eid",
+      "in": "header"
+    }
+  },
+  "security": [
+    {
+      "bearer": [],
+      "eid": []
+    }
+  ],
+  "externalDocs": {
+    "description": "gRPC-gateway boilerplate repository",
+    "url": "https://github.com/johanbrandhorst/grpc-gateway-boilerplate"
+  }
+}
