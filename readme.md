@@ -1,3 +1,3 @@
-# project-misc
+# public-misc
 
-some miscellaneous `project` code for practice.
+some miscellaneous `public` code for practice.
