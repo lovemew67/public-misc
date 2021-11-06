@@ -1,11 +1,10 @@
 # folder
 .vscode
-ignore-*
 
 # files
 .DS_Store
 *.log
 /go.mod
 /go.sum
-/project-misc
-/project-misc.exe
+/public-misc
+/public-misc.exe
