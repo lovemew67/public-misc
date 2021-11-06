@@ -1,4 +1,4 @@
-package hubpublib-001
+package hubpublib001
 
 import (
 	"log"
