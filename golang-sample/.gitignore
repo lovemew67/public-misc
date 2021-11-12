@@ -1,8 +1,17 @@
-# folder
-.vscode
+# IDE
+.idea/
+.vscode/
 
-# files
+# Go
+golang-sample
+golang-sample.exe
+
+# MAC
 .DS_Store
+*/.DS_Store
+
+# SQLite
+data/
+
+# LOGS
 *.log
-/golang-sample
-/golang-sample.exe

@@ -1,0 +1,179 @@
+syntax = "proto3";
+
+package proto;
+
+import "staff.proto";
+import "google/api/annotations.proto";
+import "protoc-gen-openapiv2/options/annotations.proto";
+
+option go_package = ".;proto";
+
+option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
+  info: {
+    version: "1.0";
+  };
+  external_docs: {
+    url: "https://github.com/johanbrandhorst/grpc-gateway-boilerplate";
+    description: "gRPC-gateway boilerplate repository";
+  }
+  host: "localhost:9699";
+  schemes: [
+    HTTP
+  ];
+  security: {
+    security_requirement: {
+      key: "eid"
+    }
+    security_requirement: {
+      key: "bearer"
+    }
+  }
+  security_definitions: {
+    security: {
+      key: "eid"
+      value: {
+        type: TYPE_API_KEY
+        in: IN_HEADER
+        name: "x-eid"
+        description: "eid"
+      }
+    }
+    security: {
+      key: "bearer"
+      value: {
+        type: TYPE_API_KEY
+        in: IN_HEADER
+        name: "Authorization"
+        description: "authorization token, prefixed by Bearer: Bearer <token>"
+      }
+    }
+  }
+};
+
+service StaffServiceV1 {
+  rpc ListStaffV1(ListStaffV1Request) returns (ListStaffV1Response) {
+    option (google.api.http) = {
+      get: "/v1/staff"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "List staff"
+      description: "List all staff on the server."
+      tags: "Staff"
+      security: {} // disable security key, bearer token
+    };
+  }
+  rpc CreateStaffV1(CreateStaffV1Request) returns (CreateStaffV1Response) {
+    option (google.api.http) = {
+      post: "/v1/staff"
+      body: "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "Add a staff"
+      description: "Add a staff to the server."
+      tags: "Staff"
+      security: {} // disable security key, bearer token
+    };
+  }
+  rpc GetStaffV1(GetStaffV1Request) returns (GetStaffV1Response) {
+    option (google.api.http) = {
+      get: "/v1/staff/{id}"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "Get a staff by their ID"
+      description: "Gets a staff from the server."
+      tags: "Staff"
+      security: {} // disable security key, bearer token
+    };
+  }
+  rpc PatchStaffV1(PatchStaffV1Request) returns (PatchStaffV1Response) {
+    option (google.api.http) = {
+      patch: "/v1/staff/{id}"
+      body: "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "Update a staff"
+      description: "Change properties of a staff."
+      tags: "Staff"
+      security: {} // disable security key, bearer token
+    };
+  }
+  rpc DeleteStaffV1(DeleteStaffV1Request) returns (DeleteStaffV1Response) {
+    option (google.api.http) = {
+      get: "/v1/staff/{id}"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "Deletes a staff by their ID"
+      description: "Deletes a staff from the server."
+      tags: "Staff"
+      security: {} // disable security key, bearer token
+    };
+  }
+}
+
+// list staff
+
+message ListStaffV1Request {
+  int32 offset = 1;
+  int32 limit = 2;
+}
+
+message ListStaffV1Response {
+  int32 code = 1;
+  int32 sub_code = 2;
+  string error_message = 3;
+  int32 total = 4;
+  repeated StaffV1 staff = 5;
+}
+
+// create staff
+
+message CreateStaffV1Request {
+  StaffV1 staff = 1;
+}
+
+message CreateStaffV1Response {
+  int32 code = 1;
+  int32 sub_code = 2;
+  string error_message = 3;
+  StaffV1 staff = 4;
+}
+
+// get staff
+
+message GetStaffV1Request {
+  string id = 1;
+}
+
+message GetStaffV1Response {
+  int32 code = 1;
+  int32 sub_code = 2;
+  string error_message = 3;
+  StaffV1 staff = 4;
+}
+
+// patch staff
+
+message PatchStaffV1Request {
+  string id = 1;
+  string name = 2;
+  string email = 3;
+  string avatar_url = 4;
+}
+
+message PatchStaffV1Response {
+  int32 code = 1;
+  int32 sub_code = 2;
+  string error_message = 3;
+}
+
+// delete staff
+
+message DeleteStaffV1Request {
+  string id = 1;
+}
+
+message DeleteStaffV1Response {
+  int32 code = 1;
+  int32 sub_code = 2;
+  string error_message = 3;
+}
