@@ -1,4 +1,4 @@
-module github.com/lovemew67/project-misc/grpc-gateway-1
+module github.com/lovemew67/public-misc/grpc-gateway-1
 
 go 1.15
 
@@ -9,7 +9,7 @@ require (
 	github.com/google/uuid v1.2.0
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.1.0
 	github.com/jinzhu/gorm v1.9.16
-	github.com/lovemew67/cornerstone v0.0.1
+	github.com/lovemew67/public-misc/cornerstone v0.0.1
 	github.com/rs/cors v1.7.0
 	github.com/spf13/cobra v1.1.1
 	github.com/spf13/viper v1.7.1

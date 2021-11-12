@@ -5,8 +5,8 @@ import (
 	"os"
 
 	"github.com/jinzhu/gorm"
-	"github.com/lovemew67/cornerstone"
 	"github.com/lovemew67/project-misc/rest-server-1/gen/proto"
+	"github.com/lovemew67/public-misc/cornerstone"
 )
 
 const (

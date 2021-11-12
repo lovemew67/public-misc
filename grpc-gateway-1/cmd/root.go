@@ -3,7 +3,7 @@ package cmd
 import (
 	"log"
 
-	"github.com/lovemew67/cornerstone"
+	"github.com/lovemew67/public-misc/cornerstone"
 	"github.com/spf13/cobra"
 )
 

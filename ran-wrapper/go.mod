@@ -1,4 +1,4 @@
-module github.com/lovemew67/project-misc/ran-wrapper
+module github.com/lovemew67/public-misc/ran-wrapper
 
 go 1.13
 

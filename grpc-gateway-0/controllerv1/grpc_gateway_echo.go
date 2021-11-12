@@ -6,8 +6,8 @@ import (
 	"net/http"
 
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
-	"github.com/lovemew67/cornerstone"
 	"github.com/lovemew67/project-misc/grpc-gateway-0/gen/proto"
+	"github.com/lovemew67/public-misc/cornerstone"
 	"github.com/rs/cors"
 	"google.golang.org/grpc"
 )

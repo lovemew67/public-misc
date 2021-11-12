@@ -67,9 +67,9 @@ github.com/klauspost/compress/zstd
 github.com/klauspost/compress/zstd/internal/xxhash
 # github.com/leodido/go-urn v1.2.0
 github.com/leodido/go-urn
-# github.com/lovemew67/cornerstone v0.0.1
+# github.com/lovemew67/public-misc/cornerstone v0.0.1
 ## explicit
-github.com/lovemew67/cornerstone
+github.com/lovemew67/public-misc/cornerstone
 # github.com/mattn/go-isatty v0.0.12
 github.com/mattn/go-isatty
 # github.com/moby/term v0.0.0-20200915141129-7f0af18e79f2

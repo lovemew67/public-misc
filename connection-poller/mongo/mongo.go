@@ -6,7 +6,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/lovemew67/cornerstone"
+	"github.com/lovemew67/public-misc/cornerstone"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"

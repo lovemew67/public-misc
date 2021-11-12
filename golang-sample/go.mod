@@ -1,4 +1,4 @@
-module github.com/lovemew67/project-misc/golang-sample
+module github.com/lovemew67/public-misc/golang-sample
 
 go 1.14
 

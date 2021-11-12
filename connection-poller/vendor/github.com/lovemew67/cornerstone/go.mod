@@ -1,4 +1,4 @@
-module github.com/lovemew67/cornerstone
+module github.com/lovemew67/public-misc/cornerstone
 
 go 1.15
 

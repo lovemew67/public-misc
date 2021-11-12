@@ -13,9 +13,9 @@ import (
 
 	_ "github.com/jinzhu/gorm/dialects/sqlite"
 
-	"github.com/lovemew67/cornerstone"
 	"github.com/lovemew67/project-misc/rest-server-1/controllerv1"
 	"github.com/lovemew67/project-misc/rest-server-1/repositoryv1"
+	"github.com/lovemew67/public-misc/cornerstone"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )

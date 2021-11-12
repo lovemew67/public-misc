@@ -4,7 +4,7 @@
 APP=grpc-gateway-0
 SOURCE=./...
 CONF=local.toml
-PKGPATH=github.com/lovemew67/cornerstone
+PKGPATH=github.com/lovemew67/public-misc/cornerstone
 
 # derived variables
 

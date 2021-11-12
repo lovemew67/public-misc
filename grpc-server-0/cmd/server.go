@@ -8,8 +8,8 @@ import (
 	"strings"
 	"syscall"
 
-	"github.com/lovemew67/cornerstone"
 	"github.com/lovemew67/project-misc/grpc-server-0/controllerv1"
+	"github.com/lovemew67/public-misc/cornerstone"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )

@@ -1,4 +1,4 @@
-module github.com/lovemew67/project-misc/confluence-hater
+module github.com/lovemew67/public-misc/confluence-hater
 
 go 1.12
 

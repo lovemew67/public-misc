@@ -10,8 +10,8 @@ import (
 
 	gph "github.com/kazegusuri/grpc-panic-handler"
 
-	"github.com/lovemew67/cornerstone"
 	"github.com/lovemew67/project-misc/grpc-server-0/gen/proto"
+	"github.com/lovemew67/public-misc/cornerstone"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/keepalive"
 )

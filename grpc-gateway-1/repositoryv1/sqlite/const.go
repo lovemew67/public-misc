@@ -4,7 +4,7 @@ import (
 	"os"
 
 	"github.com/jinzhu/gorm"
-	"github.com/lovemew67/cornerstone"
+	"github.com/lovemew67/public-misc/cornerstone"
 )
 
 const (

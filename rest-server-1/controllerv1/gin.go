@@ -4,7 +4,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/lovemew67/cornerstone"
+	"github.com/lovemew67/public-misc/cornerstone"
 	"github.com/spf13/viper"
 )
 

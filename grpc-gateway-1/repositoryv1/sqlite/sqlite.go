@@ -6,8 +6,8 @@ import (
 
 	"github.com/google/uuid"
 	"github.com/jinzhu/gorm"
-	"github.com/lovemew67/cornerstone"
 	"github.com/lovemew67/project-misc/grpc-gateway-1/gen/proto"
+	"github.com/lovemew67/public-misc/cornerstone"
 )
 
 type StaffV1SQLiteRepositorier struct{}
