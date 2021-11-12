@@ -2,9 +2,9 @@
 ## Define targets
 
 updatevendor:
-	go vet ./...
 	go mod tidy
 	go mod vendor
+	go vet ./...
 
 test: updatevendor	
 	go test -mod=vendor -v -race -cover -timeout 180s ./...
@@ -14,3 +14,6 @@ bench: updatevendor
 
 runmain: updatevendor
 	go run -mod=vendor main.go
+
+runserver: updatevendor
+	go run -mod=vendor main.go server

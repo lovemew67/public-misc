@@ -1,14 +1,14 @@
 package main
 
 import (
-	"log"
+	"os"
+
+	"github.com/lovemew67/public-misc/golang-sample/cmd"
 )
 
-func init() {
-	log.SetFlags(log.LstdFlags | log.LUTC | log.Lmicroseconds | log.Lshortfile)
-	log.Println("[init] hello")
-}
-
 func main() {
-	log.Println("[main] hello")
+	if err := cmd.Execute(); err != nil {
+		os.Exit(1)
+	}
+	os.Exit(0)
 }
