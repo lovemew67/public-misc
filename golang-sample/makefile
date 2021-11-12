@@ -6,7 +6,11 @@ export GO111MODULE=on
 
 ## Define targets
 
-run:
+updatevendor:
+	go mod tidy
+	go mod vendor
+
+runmain:
 	go run main.go
 
 test:
@@ -17,16 +21,12 @@ bench:
 	go vet ./...
 	go test -v -bench=. -benchmem -run=none ./...
 
-modrun:
+modrunmain: updatevendor
 	go run -mod=vendor main.go
 
-modvendor:
-	go mod tidy
-	go mod vendor
-
-modtest:
+modtest: updatevendor
 	go vet ./...
 	go test -mod=vendor -v -race -cover -timeout 180s ./...
 
-modbench:
+modbench: updatevendor
 	go test -mod=vendor -v -bench=. -benchmem -run=none ./...
