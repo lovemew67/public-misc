@@ -6,10 +6,10 @@ import (
 	"net"
 	"time"
 
-	"github.com/lovemew67/project-misc/grpc-gateway-1/domainv1"
-	"github.com/lovemew67/project-misc/grpc-gateway-1/gen/proto"
-	"github.com/lovemew67/project-misc/grpc-gateway-1/servicev1"
 	"github.com/lovemew67/public-misc/cornerstone"
+	"github.com/lovemew67/public-misc/grpc-gateway-1/domainv1"
+	"github.com/lovemew67/public-misc/grpc-gateway-1/gen/proto"
+	"github.com/lovemew67/public-misc/grpc-gateway-1/servicev1"
 	"github.com/spf13/viper"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/keepalive"

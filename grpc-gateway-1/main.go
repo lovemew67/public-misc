@@ -3,7 +3,7 @@ package main
 import (
 	"os"
 
-	"github.com/lovemew67/project-misc/grpc-gateway-1/cmd"
+	"github.com/lovemew67/public-misc/grpc-gateway-1/cmd"
 )
 
 func main() {

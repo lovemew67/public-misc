@@ -5,7 +5,7 @@ import (
 	"time"
 
 	"github.com/google/uuid"
-	"github.com/lovemew67/project-misc/rest-server-1/gen/proto"
+	"github.com/lovemew67/public-misc/rest-server-1/gen/proto"
 )
 
 func CreateStaff(staff *proto.Staff) (result *proto.Staff, err error) {

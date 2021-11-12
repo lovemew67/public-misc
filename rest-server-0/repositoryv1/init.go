@@ -5,8 +5,8 @@ import (
 	"os"
 
 	"github.com/jinzhu/gorm"
-	"github.com/lovemew67/project-misc/rest-server-0/modelv1"
 	"github.com/lovemew67/public-misc/cornerstone"
+	"github.com/lovemew67/public-misc/rest-server-0/modelv1"
 )
 
 var (

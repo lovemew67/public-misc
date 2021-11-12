@@ -7,9 +7,9 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
-	"github.com/lovemew67/project-misc/grpc-gateway-1/domainv1"
-	"github.com/lovemew67/project-misc/grpc-gateway-1/servicev1"
 	"github.com/lovemew67/public-misc/cornerstone"
+	"github.com/lovemew67/public-misc/grpc-gateway-1/domainv1"
+	"github.com/lovemew67/public-misc/grpc-gateway-1/servicev1"
 	"github.com/spf13/viper"
 )
 

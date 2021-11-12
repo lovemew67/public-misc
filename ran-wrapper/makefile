@@ -9,11 +9,11 @@ export GO111MODULE=on
 run:
 	go run main.go
 
-vendor:
+updatevendor:
 	go mod tidy
 	go mod vendor
 
-dockerbuild: vendor
+dockerbuild: updatevendor
 	docker build -t lovemew67/ran-wrapper:latest .
 
 dockerpush: dockerbuild

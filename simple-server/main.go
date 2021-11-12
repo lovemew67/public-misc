@@ -11,7 +11,7 @@ import (
 	"syscall"
 
 	"github.com/gin-gonic/gin"
-	"github.com/lovemew67/project-misc/simple-server/handlerv1"
+	"github.com/lovemew67/public-misc/simple-server/handlerv1"
 	"github.com/spf13/viper"
 )
 

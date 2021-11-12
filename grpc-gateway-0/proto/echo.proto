@@ -16,7 +16,7 @@ option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
     version: "1.0";
   };
   external_docs: {
-    url: "https://github.com/lovemew67/project-misc/grpc-gateway-0";
+    url: "https://github.com/lovemew67/public-misc/grpc-gateway-0";
     description: "gRPC-gateway 0";
   }
   security: {

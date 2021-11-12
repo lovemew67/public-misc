@@ -25,8 +25,6 @@ endif
 
 ## Define targets
 vendor:
-	- rm -f go.sum
-	GO111MODULE=on go build -mod=mod -v $(SOURCE) 
 	GO111MODULE=on go mod tidy
 
 server: vendor

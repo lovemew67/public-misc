@@ -1,8 +1,8 @@
 package servicev1
 
 import (
-	"github.com/lovemew67/project-misc/grpc-gateway-1/domainv1"
-	"github.com/lovemew67/project-misc/grpc-gateway-1/gen/proto"
+	"github.com/lovemew67/public-misc/grpc-gateway-1/domainv1"
+	"github.com/lovemew67/public-misc/grpc-gateway-1/gen/proto"
 )
 
 type StaffV1Service interface {

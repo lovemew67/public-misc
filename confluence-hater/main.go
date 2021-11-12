@@ -3,7 +3,7 @@ package main
 import (
 	"os"
 
-	"github.com/lovemew67/project-misc/confluence-hater/command"
+	"github.com/lovemew67/public-misc/confluence-hater/command"
 )
 
 func main() {

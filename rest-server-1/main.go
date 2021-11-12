@@ -3,7 +3,7 @@ package main
 import (
 	"os"
 
-	"github.com/lovemew67/project-misc/rest-server-1/cmd"
+	"github.com/lovemew67/public-misc/rest-server-1/cmd"
 )
 
 func main() {

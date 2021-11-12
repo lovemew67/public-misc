@@ -1,7 +1,7 @@
 package servicev1
 
 import (
-	"github.com/lovemew67/project-misc/rest-server-0/modelv1"
+	"github.com/lovemew67/public-misc/rest-server-0/modelv1"
 )
 
 type CreateStaffV1ServiceRequest struct {

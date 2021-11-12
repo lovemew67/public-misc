@@ -3,7 +3,7 @@ package repositoryv1
 import (
 	"fmt"
 
-	"github.com/lovemew67/project-misc/rest-server-0/modelv1"
+	"github.com/lovemew67/public-misc/rest-server-0/modelv1"
 )
 
 func CreateStaff(staff *modelv1.Staff) (err error) {
