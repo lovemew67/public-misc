@@ -13,6 +13,7 @@ GOPATH=$(shell env | grep GOPATH | cut -d'=' -f 2)
 REVISION=$(shell git rev-list -1 HEAD)
 TAG=$(shell git tag --sort=-version:refname --points-at HEAD | head -n1)
 DATE=$(shell date -u +"%Y-%m-%dT%H:%M:%SZ")
+THISDIR=$(dir $(abspath $(firstword $(MAKEFILE_LIST))))
 
 # if-else blocks
 ifeq ($(TAG),)
