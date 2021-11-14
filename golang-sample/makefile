@@ -62,6 +62,6 @@ runmain: updatevendor
 runserver: updatevendor
 	go run -mod=vendor main.go server
 
-server: vendor
+server: updatevendor
 	go install -mod=mod -v -ldflags "-s -X $(PKGPATH).appName=$(APP) -X $(PKGPATH).gitCommit=$(REVISION) -X $(PKGPATH).appVersion=$(TAG) -X $(PKGPATH).buildDate=$(DATE)" $(SOURCE) 
-	$(GOPATH)/bin/$(APP) server --config $(CONF) 
+	$(GOPATH)/bin/$(APP) server --config $(CONF)
