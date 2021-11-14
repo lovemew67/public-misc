@@ -26,6 +26,6 @@ func Test_All(t *testing.T) {
 
 func Benchmark_All(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		main()
+		log.Println("main")
 	}
 }
