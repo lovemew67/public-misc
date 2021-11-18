@@ -65,11 +65,7 @@ github.com/leodido/go-urn
 github.com/lovemew67/public-misc/cornerstone
 # github.com/lovemew67/public-misc/grpc-gateway-1 v0.0.0-20211114033829-f2d0ac499209
 ## explicit
-github.com/lovemew67/public-misc/grpc-gateway-1/domainv1
 github.com/lovemew67/public-misc/grpc-gateway-1/gen/proto
-github.com/lovemew67/public-misc/grpc-gateway-1/repositoryv1
-github.com/lovemew67/public-misc/grpc-gateway-1/repositoryv1mock
-github.com/lovemew67/public-misc/grpc-gateway-1/servicev1
 # github.com/magiconair/properties v1.8.5
 github.com/magiconair/properties
 # github.com/mattn/go-isatty v0.0.12

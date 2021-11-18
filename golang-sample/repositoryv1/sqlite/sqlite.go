@@ -7,7 +7,7 @@ import (
 	"github.com/google/uuid"
 	"github.com/jinzhu/gorm"
 	"github.com/lovemew67/public-misc/cornerstone"
-	"github.com/lovemew67/public-misc/grpc-gateway-1/gen/proto"
+	"github.com/lovemew67/public-misc/golang-sample/gen/proto"
 )
 
 type StaffV1SQLiteRepositorier struct{}

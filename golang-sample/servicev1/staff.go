@@ -1,9 +1,9 @@
 package servicev1
 
 import (
-	"github.com/lovemew67/public-misc/grpc-gateway-1/domainv1"
-	"github.com/lovemew67/public-misc/grpc-gateway-1/gen/proto"
-	"github.com/lovemew67/public-misc/grpc-gateway-1/repositoryv1"
+	"github.com/lovemew67/public-misc/golang-sample/domainv1"
+	"github.com/lovemew67/public-misc/golang-sample/gen/proto"
+	"github.com/lovemew67/public-misc/golang-sample/repositoryv1"
 )
 
 type StaffV1Servicer struct {

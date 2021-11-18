@@ -1,7 +1,7 @@
 package domainv1
 
 import (
-	"github.com/lovemew67/public-misc/grpc-gateway-1/gen/proto"
+	"github.com/lovemew67/public-misc/golang-sample/gen/proto"
 )
 
 type CreateStaffV1ServiceRequest struct {

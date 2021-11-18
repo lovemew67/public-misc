@@ -6,7 +6,7 @@ package repositoryv1mock
 
 import (
 	gomock "github.com/golang/mock/gomock"
-	proto "github.com/lovemew67/public-misc/grpc-gateway-1/gen/proto"
+	proto "github.com/lovemew67/public-misc/golang-sample/gen/proto"
 	reflect "reflect"
 )
 

@@ -8,8 +8,8 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/lovemew67/public-misc/cornerstone"
-	"github.com/lovemew67/public-misc/grpc-gateway-1/domainv1"
-	"github.com/lovemew67/public-misc/grpc-gateway-1/servicev1"
+	"github.com/lovemew67/public-misc/golang-sample/domainv1"
+	"github.com/lovemew67/public-misc/golang-sample/servicev1"
 	"github.com/spf13/viper"
 )
 

@@ -6,8 +6,8 @@ package servicev1mock
 
 import (
 	gomock "github.com/golang/mock/gomock"
-	domainv1 "github.com/lovemew67/public-misc/grpc-gateway-1/domainv1"
-	proto "github.com/lovemew67/public-misc/grpc-gateway-1/gen/proto"
+	domainv1 "github.com/lovemew67/public-misc/golang-sample/domainv1"
+	proto "github.com/lovemew67/public-misc/golang-sample/gen/proto"
 	reflect "reflect"
 )
 
