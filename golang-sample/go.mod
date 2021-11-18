@@ -10,7 +10,6 @@ require (
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.6.0
 	github.com/jinzhu/gorm v1.9.16
 	github.com/lovemew67/public-misc/cornerstone v0.0.0-20211112100234-bad67d7d8ccb
-	github.com/lovemew67/public-misc/grpc-gateway-1 v0.0.0-20211114033829-f2d0ac499209
 	github.com/rs/cors v1.8.0
 	github.com/spf13/cobra v1.2.1
 	github.com/spf13/viper v1.9.0

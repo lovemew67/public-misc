@@ -63,16 +63,13 @@ github.com/leodido/go-urn
 # github.com/lovemew67/public-misc/cornerstone v0.0.0-20211112100234-bad67d7d8ccb
 ## explicit
 github.com/lovemew67/public-misc/cornerstone
-# github.com/lovemew67/public-misc/grpc-gateway-1 v0.0.0-20211114033829-f2d0ac499209
-## explicit
-github.com/lovemew67/public-misc/grpc-gateway-1/gen/proto
 # github.com/magiconair/properties v1.8.5
 github.com/magiconair/properties
 # github.com/mattn/go-isatty v0.0.12
 github.com/mattn/go-isatty
 # github.com/mitchellh/mapstructure v1.4.2
 github.com/mitchellh/mapstructure
-# github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd
+# github.com/modern-go/concurrent v0.0.0-20180228061459-e0a39a4cb421
 github.com/modern-go/concurrent
 # github.com/modern-go/reflect2 v1.0.1
 github.com/modern-go/reflect2
