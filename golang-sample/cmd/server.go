@@ -14,6 +14,7 @@ import (
 	"github.com/lovemew67/public-misc/golang-sample/controllerv1"
 	"github.com/lovemew67/public-misc/golang-sample/repositoryv1/sqlite"
 	"github.com/lovemew67/public-misc/golang-sample/servicev1"
+	"github.com/lovemew67/public-misc/golang-sample/workerv1"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
@@ -76,6 +77,10 @@ func NewAPIServerCmd() *cobra.Command {
 			grpcGateway := controllerv1.InitGRPCGateway(systemCtx)
 			grpcGatewayCanceller := controllerv1.GRPCGatewayListenAndServe(systemCtx, grpcGateway)
 			defer grpcGatewayCanceller()
+
+			// init scheduler
+			scheduleTicker := workerv1.InitScheduler(systemCtx)
+			defer scheduleTicker.Stop()
 
 			// add graceful shutdown
 			signal.Notify(quit, os.Interrupt, syscall.SIGINT, syscall.SIGTERM, syscall.SIGQUIT)
