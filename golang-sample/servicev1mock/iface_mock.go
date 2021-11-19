@@ -5,36 +5,37 @@
 package servicev1mock
 
 import (
+	reflect "reflect"
+
 	gomock "github.com/golang/mock/gomock"
 	domainv1 "github.com/lovemew67/public-misc/golang-sample/domainv1"
-	proto "github.com/lovemew67/public-misc/golang-sample/gen/proto"
-	reflect "reflect"
+	proto "github.com/lovemew67/public-misc/golang-sample/gen/go/proto"
 )
 
-// MockStaffV1Service is a mock of StaffV1Service interface
+// MockStaffV1Service is a mock of StaffV1Service interface.
 type MockStaffV1Service struct {
 	ctrl     *gomock.Controller
 	recorder *MockStaffV1ServiceMockRecorder
 }
 
-// MockStaffV1ServiceMockRecorder is the mock recorder for MockStaffV1Service
+// MockStaffV1ServiceMockRecorder is the mock recorder for MockStaffV1Service.
 type MockStaffV1ServiceMockRecorder struct {
 	mock *MockStaffV1Service
 }
 
-// NewMockStaffV1Service creates a new mock instance
+// NewMockStaffV1Service creates a new mock instance.
 func NewMockStaffV1Service(ctrl *gomock.Controller) *MockStaffV1Service {
 	mock := &MockStaffV1Service{ctrl: ctrl}
 	mock.recorder = &MockStaffV1ServiceMockRecorder{mock}
 	return mock
 }
 
-// EXPECT returns an object that allows the caller to indicate expected use
+// EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockStaffV1Service) EXPECT() *MockStaffV1ServiceMockRecorder {
 	return m.recorder
 }
 
-// CreateStaffV1Service mocks base method
+// CreateStaffV1Service mocks base method.
 func (m *MockStaffV1Service) CreateStaffV1Service(arg0 *domainv1.CreateStaffV1ServiceRequest) (*proto.StaffV1, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "CreateStaffV1Service", arg0)
@@ -43,13 +44,27 @@ func (m *MockStaffV1Service) CreateStaffV1Service(arg0 *domainv1.CreateStaffV1Se
 	return ret0, ret1
 }
 
-// CreateStaffV1Service indicates an expected call of CreateStaffV1Service
+// CreateStaffV1Service indicates an expected call of CreateStaffV1Service.
 func (mr *MockStaffV1ServiceMockRecorder) CreateStaffV1Service(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateStaffV1Service", reflect.TypeOf((*MockStaffV1Service)(nil).CreateStaffV1Service), arg0)
 }
 
-// GetStaffV1Service mocks base method
+// DeleteStaffV1Service mocks base method.
+func (m *MockStaffV1Service) DeleteStaffV1Service(arg0 *domainv1.DeleteStaffV1ServiceRequest) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "DeleteStaffV1Service", arg0)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// DeleteStaffV1Service indicates an expected call of DeleteStaffV1Service.
+func (mr *MockStaffV1ServiceMockRecorder) DeleteStaffV1Service(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteStaffV1Service", reflect.TypeOf((*MockStaffV1Service)(nil).DeleteStaffV1Service), arg0)
+}
+
+// GetStaffV1Service mocks base method.
 func (m *MockStaffV1Service) GetStaffV1Service(arg0 *domainv1.GetStaffV1ServiceRequest) (*proto.StaffV1, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetStaffV1Service", arg0)
@@ -58,13 +73,13 @@ func (m *MockStaffV1Service) GetStaffV1Service(arg0 *domainv1.GetStaffV1ServiceR
 	return ret0, ret1
 }
 
-// GetStaffV1Service indicates an expected call of GetStaffV1Service
+// GetStaffV1Service indicates an expected call of GetStaffV1Service.
 func (mr *MockStaffV1ServiceMockRecorder) GetStaffV1Service(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetStaffV1Service", reflect.TypeOf((*MockStaffV1Service)(nil).GetStaffV1Service), arg0)
 }
 
-// ListStaffV1Service mocks base method
+// ListStaffV1Service mocks base method.
 func (m *MockStaffV1Service) ListStaffV1Service(arg0 *domainv1.ListStaffV1ServiceRequest) ([]*proto.StaffV1, int, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "ListStaffV1Service", arg0)
@@ -74,13 +89,13 @@ func (m *MockStaffV1Service) ListStaffV1Service(arg0 *domainv1.ListStaffV1Servic
 	return ret0, ret1, ret2
 }
 
-// ListStaffV1Service indicates an expected call of ListStaffV1Service
+// ListStaffV1Service indicates an expected call of ListStaffV1Service.
 func (mr *MockStaffV1ServiceMockRecorder) ListStaffV1Service(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListStaffV1Service", reflect.TypeOf((*MockStaffV1Service)(nil).ListStaffV1Service), arg0)
 }
 
-// PatchStaffV1Service mocks base method
+// PatchStaffV1Service mocks base method.
 func (m *MockStaffV1Service) PatchStaffV1Service(arg0 *domainv1.PatchStaffV1ServiceRequest) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "PatchStaffV1Service", arg0)
@@ -88,22 +103,8 @@ func (m *MockStaffV1Service) PatchStaffV1Service(arg0 *domainv1.PatchStaffV1Serv
 	return ret0
 }
 
-// PatchStaffV1Service indicates an expected call of PatchStaffV1Service
+// PatchStaffV1Service indicates an expected call of PatchStaffV1Service.
 func (mr *MockStaffV1ServiceMockRecorder) PatchStaffV1Service(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "PatchStaffV1Service", reflect.TypeOf((*MockStaffV1Service)(nil).PatchStaffV1Service), arg0)
-}
-
-// DeleteStaffV1Service mocks base method
-func (m *MockStaffV1Service) DeleteStaffV1Service(arg0 *domainv1.DeleteStaffV1ServiceRequest) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "DeleteStaffV1Service", arg0)
-	ret0, _ := ret[0].(error)
-	return ret0
-}
-
-// DeleteStaffV1Service indicates an expected call of DeleteStaffV1Service
-func (mr *MockStaffV1ServiceMockRecorder) DeleteStaffV1Service(arg0 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteStaffV1Service", reflect.TypeOf((*MockStaffV1Service)(nil).DeleteStaffV1Service), arg0)
 }

@@ -8,7 +8,7 @@ import (
 
 	"github.com/lovemew67/public-misc/cornerstone"
 	"github.com/lovemew67/public-misc/golang-sample/domainv1"
-	"github.com/lovemew67/public-misc/golang-sample/gen/proto"
+	"github.com/lovemew67/public-misc/golang-sample/gen/go/proto"
 	"github.com/lovemew67/public-misc/golang-sample/servicev1"
 	"github.com/spf13/viper"
 	"google.golang.org/grpc"

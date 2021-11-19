@@ -4,6 +4,7 @@ import (
 	"log"
 	"os"
 	"testing"
+	"time"
 
 	"github.com/stretchr/testify/assert"
 )
@@ -26,6 +27,6 @@ func Test_All(t *testing.T) {
 
 func Benchmark_All(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		log.Println("main")
+		time.Sleep(10 * time.Millisecond)
 	}
 }

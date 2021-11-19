@@ -5,50 +5,36 @@
 package repositoryv1mock
 
 import (
-	gomock "github.com/golang/mock/gomock"
-	proto "github.com/lovemew67/public-misc/golang-sample/gen/proto"
 	reflect "reflect"
+
+	gomock "github.com/golang/mock/gomock"
+	proto "github.com/lovemew67/public-misc/golang-sample/gen/go/proto"
 )
 
-// MockStaffV1Repository is a mock of StaffV1Repository interface
+// MockStaffV1Repository is a mock of StaffV1Repository interface.
 type MockStaffV1Repository struct {
 	ctrl     *gomock.Controller
 	recorder *MockStaffV1RepositoryMockRecorder
 }
 
-// MockStaffV1RepositoryMockRecorder is the mock recorder for MockStaffV1Repository
+// MockStaffV1RepositoryMockRecorder is the mock recorder for MockStaffV1Repository.
 type MockStaffV1RepositoryMockRecorder struct {
 	mock *MockStaffV1Repository
 }
 
-// NewMockStaffV1Repository creates a new mock instance
+// NewMockStaffV1Repository creates a new mock instance.
 func NewMockStaffV1Repository(ctrl *gomock.Controller) *MockStaffV1Repository {
 	mock := &MockStaffV1Repository{ctrl: ctrl}
 	mock.recorder = &MockStaffV1RepositoryMockRecorder{mock}
 	return mock
 }
 
-// EXPECT returns an object that allows the caller to indicate expected use
+// EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockStaffV1Repository) EXPECT() *MockStaffV1RepositoryMockRecorder {
 	return m.recorder
 }
 
-// CreateStaff mocks base method
-func (m *MockStaffV1Repository) CreateStaff(arg0 *proto.StaffV1) (*proto.StaffV1, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "CreateStaff", arg0)
-	ret0, _ := ret[0].(*proto.StaffV1)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// CreateStaff indicates an expected call of CreateStaff
-func (mr *MockStaffV1RepositoryMockRecorder) CreateStaff(arg0 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateStaff", reflect.TypeOf((*MockStaffV1Repository)(nil).CreateStaff), arg0)
-}
-
-// CountTotalStaff mocks base method
+// CountTotalStaff mocks base method.
 func (m *MockStaffV1Repository) CountTotalStaff() (int, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "CountTotalStaff")
@@ -57,13 +43,42 @@ func (m *MockStaffV1Repository) CountTotalStaff() (int, error) {
 	return ret0, ret1
 }
 
-// CountTotalStaff indicates an expected call of CountTotalStaff
+// CountTotalStaff indicates an expected call of CountTotalStaff.
 func (mr *MockStaffV1RepositoryMockRecorder) CountTotalStaff() *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CountTotalStaff", reflect.TypeOf((*MockStaffV1Repository)(nil).CountTotalStaff))
 }
 
-// GetStaff mocks base method
+// CreateStaff mocks base method.
+func (m *MockStaffV1Repository) CreateStaff(arg0 *proto.StaffV1) (*proto.StaffV1, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "CreateStaff", arg0)
+	ret0, _ := ret[0].(*proto.StaffV1)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// CreateStaff indicates an expected call of CreateStaff.
+func (mr *MockStaffV1RepositoryMockRecorder) CreateStaff(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateStaff", reflect.TypeOf((*MockStaffV1Repository)(nil).CreateStaff), arg0)
+}
+
+// DeleteStaff mocks base method.
+func (m *MockStaffV1Repository) DeleteStaff(arg0 string) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "DeleteStaff", arg0)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// DeleteStaff indicates an expected call of DeleteStaff.
+func (mr *MockStaffV1RepositoryMockRecorder) DeleteStaff(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteStaff", reflect.TypeOf((*MockStaffV1Repository)(nil).DeleteStaff), arg0)
+}
+
+// GetStaff mocks base method.
 func (m *MockStaffV1Repository) GetStaff(id string) (*proto.StaffV1, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetStaff", id)
@@ -72,13 +87,27 @@ func (m *MockStaffV1Repository) GetStaff(id string) (*proto.StaffV1, error) {
 	return ret0, ret1
 }
 
-// GetStaff indicates an expected call of GetStaff
+// GetStaff indicates an expected call of GetStaff.
 func (mr *MockStaffV1RepositoryMockRecorder) GetStaff(id interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetStaff", reflect.TypeOf((*MockStaffV1Repository)(nil).GetStaff), id)
 }
 
-// QueryAllStaffWithOffsetAndLimit mocks base method
+// PatchStaff mocks base method.
+func (m *MockStaffV1Repository) PatchStaff(arg0 string, arg1 *proto.StaffV1) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "PatchStaff", arg0, arg1)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// PatchStaff indicates an expected call of PatchStaff.
+func (mr *MockStaffV1RepositoryMockRecorder) PatchStaff(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "PatchStaff", reflect.TypeOf((*MockStaffV1Repository)(nil).PatchStaff), arg0, arg1)
+}
+
+// QueryAllStaffWithOffsetAndLimit mocks base method.
 func (m *MockStaffV1Repository) QueryAllStaffWithOffsetAndLimit(offset, limit int) ([]*proto.StaffV1, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "QueryAllStaffWithOffsetAndLimit", offset, limit)
@@ -87,36 +116,8 @@ func (m *MockStaffV1Repository) QueryAllStaffWithOffsetAndLimit(offset, limit in
 	return ret0, ret1
 }
 
-// QueryAllStaffWithOffsetAndLimit indicates an expected call of QueryAllStaffWithOffsetAndLimit
+// QueryAllStaffWithOffsetAndLimit indicates an expected call of QueryAllStaffWithOffsetAndLimit.
 func (mr *MockStaffV1RepositoryMockRecorder) QueryAllStaffWithOffsetAndLimit(offset, limit interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "QueryAllStaffWithOffsetAndLimit", reflect.TypeOf((*MockStaffV1Repository)(nil).QueryAllStaffWithOffsetAndLimit), offset, limit)
-}
-
-// PatchStaff mocks base method
-func (m *MockStaffV1Repository) PatchStaff(arg0 string, arg1 *proto.StaffV1) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "PatchStaff", arg0, arg1)
-	ret0, _ := ret[0].(error)
-	return ret0
-}
-
-// PatchStaff indicates an expected call of PatchStaff
-func (mr *MockStaffV1RepositoryMockRecorder) PatchStaff(arg0, arg1 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "PatchStaff", reflect.TypeOf((*MockStaffV1Repository)(nil).PatchStaff), arg0, arg1)
-}
-
-// DeleteStaff mocks base method
-func (m *MockStaffV1Repository) DeleteStaff(arg0 string) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "DeleteStaff", arg0)
-	ret0, _ := ret[0].(error)
-	return ret0
-}
-
-// DeleteStaff indicates an expected call of DeleteStaff
-func (mr *MockStaffV1RepositoryMockRecorder) DeleteStaff(arg0 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteStaff", reflect.TypeOf((*MockStaffV1Repository)(nil).DeleteStaff), arg0)
 }

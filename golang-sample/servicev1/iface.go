@@ -2,7 +2,7 @@ package servicev1
 
 import (
 	"github.com/lovemew67/public-misc/golang-sample/domainv1"
-	"github.com/lovemew67/public-misc/golang-sample/gen/proto"
+	"github.com/lovemew67/public-misc/golang-sample/gen/go/proto"
 )
 
 type StaffV1Service interface {

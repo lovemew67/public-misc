@@ -5,7 +5,7 @@ import (
 
 	"github.com/golang/mock/gomock"
 	"github.com/lovemew67/public-misc/golang-sample/domainv1"
-	"github.com/lovemew67/public-misc/golang-sample/gen/proto"
+	"github.com/lovemew67/public-misc/golang-sample/gen/go/proto"
 	"github.com/lovemew67/public-misc/golang-sample/repositoryv1mock"
 	"github.com/stretchr/testify/assert"
 )

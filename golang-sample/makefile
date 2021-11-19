@@ -27,14 +27,15 @@ endif
 
 genproto:
 	protoc -I ./proto \
-	--go_out ./gen/proto --go_opt paths=source_relative \
-	--go-grpc_out ./gen/proto --go_opt paths=source_relative \
-	--grpc-gateway_out ./gen/proto --grpc-gateway_opt paths=source_relative \
+	--dart_out=./gen/dart/proton \
+	--go_out ./gen/go/proto --go_opt paths=source_relative \
+	--go-grpc_out ./gen/go/proto --go_opt paths=source_relative \
+	--grpc-gateway_out ./gen/go/proto --grpc-gateway_opt paths=source_relative \
 	--openapiv2_out ./gen/openapiv2 --openapiv2_opt logtostderr=true \
 	./proto/*.proto
 
 injecttag:
-	protoc-go-inject-tag -input=./gen/proto/staff.pb.go
+	protoc-go-inject-tag -input=./gen/go/proto/staff.pb.go
 
 genall: genproto injecttag
 

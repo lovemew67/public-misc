@@ -1,5 +1,22 @@
-#!/bin/bash
+#!/bin/sh
 
-./mockgen_1.4.4 -source=./repositoryv1/iface.go -destination=./repositoryv1mock/iface_mock.go -package=repositoryv1mock
+# https://stackoverflow.com/questions/3466166/how-to-check-if-running-in-cygwin-mac-or-linux
+# https://stackoverflow.com/questions/48678152/how-to-detect-386-amd64-arm-or-arm64-os-architecture-via-shell-bash
 
-./mockgen_1.4.4 -source=./servicev1/iface.go -destination=./servicev1mock/iface_mock.go -package=servicev1mock
+version="1.6.0"
+
+case "$(uname -s)" in
+   Darwin)
+    ./bin/mockgen_darwin_$(uname -m)_${version} -source=./repositoryv1/iface.go -destination=./repositoryv1mock/iface_mock.go -package=repositoryv1mock
+	  ./bin/mockgen_darwin_$(uname -m)_${version} -source=./servicev1/iface.go -destination=./servicev1mock/iface_mock.go -package=servicev1mock
+     ;;
+   Linux)
+	  ./bin/mockgen_linux_$(uname -m)_${version} -source=./repositoryv1/iface.go -destination=./repositoryv1mock/iface_mock.go -package=repositoryv1mock
+	  ./bin/mockgen_linux_$(uname -m)_${version} -source=./servicev1/iface.go -destination=./servicev1mock/iface_mock.go -package=servicev1mock
+     ;;
+   CYGWIN*|MINGW32*|MSYS*|MINGW*)
+     ;;
+   *)
+     echo 'Other OS' 
+     ;;
+esac
