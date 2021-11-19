@@ -27,7 +27,7 @@ endif
 
 genproto:
 	protoc -I ./proto \
-	--dart_out=./gen/dart/proton \
+	--dart_out ./gen/dart/proto \
 	--go_out ./gen/go/proto --go_opt paths=source_relative \
 	--go-grpc_out ./gen/go/proto --go_opt paths=source_relative \
 	--grpc-gateway_out ./gen/go/proto --grpc-gateway_opt paths=source_relative \
