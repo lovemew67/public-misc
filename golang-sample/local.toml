@@ -7,18 +7,3 @@
 [grpc]
   port = "9599"
   gateway_port = "9699"
-
-[database]
-[database.mgo]
-  name = "zzh-z530"
-  user = "username"
-  password = "password"
-  authdatabase = "admin"
-  max_conn = 4
-  max_idle = 15
-  timeout = "30s"
-  direct = false
-  secondary = false
-  mongos = false
-  auth = true
-  hosts = "172.31.35.42:27017"
