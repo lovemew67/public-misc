@@ -11,10 +11,6 @@ type scheduleConfig struct {
 	CheckInterval time.Duration
 }
 
-type scheduler struct {
-	ErrorHandler func(cornerstone.CodeError)
-}
-
 func getAutoDeletionScheduleInfo() scheduleConfig {
 	return scheduleConfig{
 		BatchSize:     10,
@@ -26,9 +22,8 @@ func InitScheduler(ctx cornerstone.Context, executeCycle ...time.Duration) *time
 	funcName := "InitScheduler"
 
 	sfg := getAutoDeletionScheduleInfo()
-	cornerstone.Debugf(ctx, "[InitAutoDeletionScheduler] init scheduleConfig: %+v", funcName, sfg)
+	cornerstone.Debugf(ctx, "[%s] init scheduleConfig: %+v", funcName, sfg)
 
-	// default execute metrics funcs every 500 ms
 	cycle := sfg.CheckInterval
 	if len(executeCycle) > 0 {
 		cycle = executeCycle[0]
@@ -37,8 +32,9 @@ func InitScheduler(ctx cornerstone.Context, executeCycle ...time.Duration) *time
 
 	tick := time.NewTicker(cycle)
 	go func(tick *time.Ticker) {
-		ctx := cornerstone.Background()
+		ctx := cornerstone.NewContext()
 		ctx.Set("worker", "scheduler")
+		cornerstone.Debugf(ctx, "[%s] ticker routine inited", funcName)
 		for range tick.C {
 			scheduleHandler(ctx)
 		}
@@ -47,47 +43,9 @@ func InitScheduler(ctx cornerstone.Context, executeCycle ...time.Duration) *time
 }
 
 func scheduleHandler(ctx cornerstone.Context) {
-	// funcName := "scheduleHandler"
-
-	// autoDeletionScheduleOperator := dbaccessv1.GetAutoDeletionScheduleOperator()
-	// qa := &dbaccessv1.QueryArgs{
-	// 	StatusRunning: false,
-	// 	Enable:        true,
-	// }
-	// sfs := dbaccessv1.GetSelectFields([]string{}, []string{})
-	// autoDeletionScheduleList, total := autoDeletionScheduleOperator.Find(ctx, qa, sfs, 0, autoDeletionScheduleConfig.BatchSize)
-	// if total == 0 {
-	// 	return
-	// }
-
-	// for idx := range autoDeletionScheduleList {
-	// autoDeletionSchedule := &autoDeletionScheduleList[idx]
-
-	// == block concurrent dispatching
-	// qa := &dbaccessv1.QueryArgs{
-	// 	StatusRunning: false,
-	// 	Enable:        true,
-	// 	Service:       autoDeletionSchedule.Service,
-	// }
-	// patchMap := bson.M{
-	// 	modelv1.FdStatusRunning: true,
-	// }
-	// err := autoDeletionScheduleOperator.Patch(ctx, qa, patchMap)
-	// if err != nil {
-	// 	m800log.Infof(ctx, "[%s] failed to patch auto deletion schedule, qa: %+v, err: %+v", funcName, qa, err)
-	// 	continue
-	// }
-
-	// == do something
-
-	// == unblock
-	// qa.StatusRunning = true
-	// patchMap = bson.M{
-	// 	modelv1.FdStatusRunning: false,
-	// }
-	// err = autoDeletionScheduleOperator.Patch(ctx, qa, patchMap)
-	// if err != nil {
-	// 	m800log.Errorf(ctx, "[%s] failed to patch auto deletion schedule, err: %+v", funcName, err)
-	// }
-	// }
+	// list valid schedules
+	// for each schedule
+	//  block concurrent dispatching
+	//  do handling: (eg, insert job)
+	//  unblock
 }
