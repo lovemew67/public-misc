@@ -82,6 +82,9 @@ func NewAPIServerCmd() *cobra.Command {
 			scheduleTicker := workerv1.InitScheduler(systemCtx)
 			defer scheduleTicker.Stop()
 
+			// // init worker
+			// workerv1.InitAndBlocking()
+
 			// add graceful shutdown
 			signal.Notify(quit, os.Interrupt, syscall.SIGINT, syscall.SIGTERM, syscall.SIGQUIT)
 
