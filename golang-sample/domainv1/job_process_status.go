@@ -1,12 +1,12 @@
 package domainv1
 
-type jobProcessStatus int
+type JobProcessStatus int
 
 const (
-	jobProcessStatusStopped jobProcessStatus = -1
-	jobProcessStatusOngoing jobProcessStatus = 1
+	JobProcessStatusStopped JobProcessStatus = -1
+	JobProcessStatusOngoing JobProcessStatus = 1
 )
 
-func (jps jobProcessStatus) ToInt() int {
+func (jps JobProcessStatus) ToInt() int {
 	return int(jps)
 }

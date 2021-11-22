@@ -5,7 +5,7 @@ import (
 	"time"
 )
 
-type TranscodeTask struct {
+type Job struct {
 	ID int `json:"id" gorm:"column:id;primary_key"`
 
 	InternalData string `json:"internalData"  gorm:"column:internal_data"`
@@ -24,7 +24,7 @@ type JobInternalData struct {
 	Metadata      map[string]interface{} `json:"metadata"`
 }
 
-func NewTranscodeTask(maxRetry int, jobType JobType, metadata map[string]interface{}) *TranscodeTask {
+func NewJob(maxRetry int, jobType JobType, metadata map[string]interface{}) *Job {
 	now := time.Now().UTC()
 	internalData := JobInternalData{
 		FailedReasons: map[int]string{},
