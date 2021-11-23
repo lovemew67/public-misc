@@ -7,3 +7,8 @@
 [grpc]
   port = "9599"
   gateway_port = "9699"
+
+# v2 workers
+[app.retry]
+  max_count = 6 # min fixed to 1, total retry (6-1) times
+  delay = 4 # in minutes

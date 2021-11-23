@@ -56,6 +56,10 @@ func NewAPIServerCmd() *cobra.Command {
 			if errRepository != nil {
 				cornerstone.Panicf(systemCtx, "[%s] failed to create staff v1 repositiory, err: %+v", funcName, errRepository)
 			}
+			_, errRepository = sqlite.NewJobV1SQLiteRepositorier(systemCtx)
+			if errRepository != nil {
+				cornerstone.Panicf(systemCtx, "[%s] failed to create job v1 repositiory, err: %+v", funcName, errRepository)
+			}
 
 			// init service
 			staffV1Service, errService := servicev1.NewStaffV1Servicer(staffV1Repositorier)
@@ -82,15 +86,11 @@ func NewAPIServerCmd() *cobra.Command {
 			scheduleTicker := workerv1.InitScheduler(systemCtx)
 			defer scheduleTicker.Stop()
 
-			// // init worker
-			// workerv1.InitAndBlocking()
-
 			// add graceful shutdown
 			signal.Notify(quit, os.Interrupt, syscall.SIGINT, syscall.SIGTERM, syscall.SIGQUIT)
 
-			// blocking
-			sig := <-quit
-			cornerstone.Infof(systemCtx, "[%s] receive exit signal: %+v", cornerstone.GetAppName(), sig)
+			// init workers and blocking
+			workerv1.InitAndBlocking(systemCtx, quit)
 		},
 	}
 

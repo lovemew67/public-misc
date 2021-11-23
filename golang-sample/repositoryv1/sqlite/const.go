@@ -8,8 +8,12 @@ import (
 )
 
 const (
-	dialect   = "sqlite3"
-	tableName = "staff_v1"
+	dialect = "sqlite3"
+)
+
+const (
+	staffV1TableName = "staff_v1"
+	jobV1TableName   = "job_v1"
 )
 
 const (

@@ -8,6 +8,7 @@ import (
 type Job struct {
 	ID int `json:"id" gorm:"column:id;primary_key"`
 
+	CID          string `json:"cid"           gorm:"column:cid"`
 	InternalData string `json:"internalData"  gorm:"column:internal_data"`
 	RetryCount   int    `json:"retryCount"    gorm:"column:retry_count;index:retry_count"`
 	Status       int    `json:"status"        gorm:"column:status;index:status"`

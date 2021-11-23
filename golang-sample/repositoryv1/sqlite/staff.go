@@ -99,7 +99,7 @@ func NewStaffV1SQLiteRepositorier(ctx cornerstone.Context) (result *StaffV1SQLit
 
 	task := &proto.StaffV1{}
 	if hasTable := sqlitedb.HasTable(task); hasTable {
-		cornerstone.Infof(ctx, "[%s] continue to reuse the table: %s", funcName, tableName)
+		cornerstone.Infof(ctx, "[%s] continue to reuse the table: %s", funcName, staffV1TableName)
 		db.AutoMigrate(&proto.StaffV1{})
 		return
 	}
