@@ -110,8 +110,8 @@ func updateInternalDataFailedReasons(ctx cornerstone.Context, job *domainv1.Job,
 	return
 }
 
-func removeFromTaskQueue(ctx cornerstone.Context, job *domainv1.Job, err error) {
-	funcName := "removeFromTaskQueue"
+func removeFromJobQueue(ctx cornerstone.Context, job *domainv1.Job, err error) {
+	funcName := "removeFromJobQueue"
 	if err := updateInternalDataFailedReasons(ctx, job, err.Error()); err != nil {
 		cornerstone.Errorf(ctx, "[%s] failed to update internal data for job: %+v, err: %+v", funcName, job, err)
 	}
