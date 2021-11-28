@@ -5,7 +5,7 @@ go 1.15
 require (
 	github.com/gin-gonic/gin v1.6.3
 	github.com/jinzhu/gorm v1.9.16
-	github.com/lovemew67/public-misc/cornerstone v0.0.0-20211112091656-8b63ee071dca
+	github.com/lovemew67/public-misc/cornerstone v0.0.0-20211128133305-a7b62d470160
 	github.com/spf13/cobra v1.1.1
 	github.com/spf13/viper v1.7.1
 )

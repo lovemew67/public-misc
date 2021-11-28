@@ -6,7 +6,7 @@ require (
 	github.com/golang/protobuf v1.4.3
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.1.0
 	github.com/kazegusuri/grpc-panic-handler v0.0.0-20160502122501-093ec776affc
-	github.com/lovemew67/public-misc/cornerstone v0.0.0-20211112091656-8b63ee071dca
+	github.com/lovemew67/public-misc/cornerstone v0.0.0-20211126121849-916d18017651
 	github.com/rs/cors v1.7.0
 	github.com/spf13/cobra v1.1.1
 	github.com/spf13/viper v1.7.1
