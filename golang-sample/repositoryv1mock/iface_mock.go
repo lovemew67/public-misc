@@ -8,6 +8,7 @@ import (
 	reflect "reflect"
 
 	gomock "github.com/golang/mock/gomock"
+	domainv1 "github.com/lovemew67/public-misc/golang-sample/domainv1"
 	proto "github.com/lovemew67/public-misc/golang-sample/gen/go/proto"
 )
 
@@ -120,4 +121,126 @@ func (m *MockStaffV1Repository) QueryAllStaffWithOffsetAndLimit(offset, limit in
 func (mr *MockStaffV1RepositoryMockRecorder) QueryAllStaffWithOffsetAndLimit(offset, limit interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "QueryAllStaffWithOffsetAndLimit", reflect.TypeOf((*MockStaffV1Repository)(nil).QueryAllStaffWithOffsetAndLimit), offset, limit)
+}
+
+// MockJobV1Repository is a mock of JobV1Repository interface.
+type MockJobV1Repository struct {
+	ctrl     *gomock.Controller
+	recorder *MockJobV1RepositoryMockRecorder
+}
+
+// MockJobV1RepositoryMockRecorder is the mock recorder for MockJobV1Repository.
+type MockJobV1RepositoryMockRecorder struct {
+	mock *MockJobV1Repository
+}
+
+// NewMockJobV1Repository creates a new mock instance.
+func NewMockJobV1Repository(ctrl *gomock.Controller) *MockJobV1Repository {
+	mock := &MockJobV1Repository{ctrl: ctrl}
+	mock.recorder = &MockJobV1RepositoryMockRecorder{mock}
+	return mock
+}
+
+// EXPECT returns an object that allows the caller to indicate expected use.
+func (m *MockJobV1Repository) EXPECT() *MockJobV1RepositoryMockRecorder {
+	return m.recorder
+}
+
+// CancelTaskByID mocks base method.
+func (m *MockJobV1Repository) CancelTaskByID(id int) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "CancelTaskByID", id)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// CancelTaskByID indicates an expected call of CancelTaskByID.
+func (mr *MockJobV1RepositoryMockRecorder) CancelTaskByID(id interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CancelTaskByID", reflect.TypeOf((*MockJobV1Repository)(nil).CancelTaskByID), id)
+}
+
+// Insert mocks base method.
+func (m *MockJobV1Repository) Insert(job domainv1.Job) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Insert", job)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// Insert indicates an expected call of Insert.
+func (mr *MockJobV1RepositoryMockRecorder) Insert(job interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Insert", reflect.TypeOf((*MockJobV1Repository)(nil).Insert), job)
+}
+
+// QueryReadyTask mocks base method.
+func (m *MockJobV1Repository) QueryReadyTask() ([]domainv1.Job, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "QueryReadyTask")
+	ret0, _ := ret[0].([]domainv1.Job)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// QueryReadyTask indicates an expected call of QueryReadyTask.
+func (mr *MockJobV1RepositoryMockRecorder) QueryReadyTask() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "QueryReadyTask", reflect.TypeOf((*MockJobV1Repository)(nil).QueryReadyTask))
+}
+
+// RemoveFromTaskQueue mocks base method.
+func (m *MockJobV1Repository) RemoveFromTaskQueue(task *domainv1.Job) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "RemoveFromTaskQueue", task)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// RemoveFromTaskQueue indicates an expected call of RemoveFromTaskQueue.
+func (mr *MockJobV1RepositoryMockRecorder) RemoveFromTaskQueue(task interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "RemoveFromTaskQueue", reflect.TypeOf((*MockJobV1Repository)(nil).RemoveFromTaskQueue), task)
+}
+
+// UpdateProcessStatusToOngoing mocks base method.
+func (m *MockJobV1Repository) UpdateProcessStatusToOngoing(id int) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "UpdateProcessStatusToOngoing", id)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// UpdateProcessStatusToOngoing indicates an expected call of UpdateProcessStatusToOngoing.
+func (mr *MockJobV1RepositoryMockRecorder) UpdateProcessStatusToOngoing(id interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateProcessStatusToOngoing", reflect.TypeOf((*MockJobV1Repository)(nil).UpdateProcessStatusToOngoing), id)
+}
+
+// UpdateTaskStatusStillOngoing mocks base method.
+func (m *MockJobV1Repository) UpdateTaskStatusStillOngoing(task *domainv1.Job) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "UpdateTaskStatusStillOngoing", task)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// UpdateTaskStatusStillOngoing indicates an expected call of UpdateTaskStatusStillOngoing.
+func (mr *MockJobV1RepositoryMockRecorder) UpdateTaskStatusStillOngoing(task interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateTaskStatusStillOngoing", reflect.TypeOf((*MockJobV1Repository)(nil).UpdateTaskStatusStillOngoing), task)
+}
+
+// UpdateTaskStatusToStopped mocks base method.
+func (m *MockJobV1Repository) UpdateTaskStatusToStopped(task *domainv1.Job) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "UpdateTaskStatusToStopped", task)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// UpdateTaskStatusToStopped indicates an expected call of UpdateTaskStatusToStopped.
+func (mr *MockJobV1RepositoryMockRecorder) UpdateTaskStatusToStopped(task interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateTaskStatusToStopped", reflect.TypeOf((*MockJobV1Repository)(nil).UpdateTaskStatusToStopped), task)
 }
