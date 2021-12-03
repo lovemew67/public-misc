@@ -44,13 +44,9 @@ func dispatcherLoop(jobDispatch func(cornerstone.Context), dispatcherDone chan s
 }
 
 func jobDispatch(ctx cornerstone.Context) {
-	funcName := "jobDispatch"
-	cornerstone.Debugf(ctx, "[%s] triggered", funcName)
-
 	// get available jobs
 	acceptableJobs := listAvailableJobs(ctx)
 	if len(acceptableJobs) == 0 {
-		cornerstone.Debugf(ctx, "[%s] oh no", funcName)
 		return
 	}
 }
