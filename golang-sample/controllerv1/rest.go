@@ -17,6 +17,10 @@ const (
 	pathID = "id"
 )
 
+var (
+	ctx = cornerstone.NewContext()
+)
+
 func InitGinServer(_s servicev1.StaffV1Service) (gs *GinServer) {
 	// create gin  server.
 	gin.SetMode(viper.GetString("rest.mode"))
@@ -81,6 +85,26 @@ func (gs *GinServer) initRoutings() {
 		staffGroup.GET(fmt.Sprintf("/:%s", pathID), gs.getStaffV1Handler)
 		staffGroup.PATCH(fmt.Sprintf("/:%s", pathID), gs.patchStaffV1Handler)
 		staffGroup.DELETE(fmt.Sprintf("/:%s", pathID), gs.deleteStaffV1Handler)
+	}
+
+	// add schedule v1 handlers
+	scheduleGroup := rootGroup.Group("/v1/schedule")
+	{
+		scheduleGroup.GET("", gs.listScheduleV1Handler)
+		scheduleGroup.POST("", gs.createScheduleV1Handler)
+		scheduleGroup.GET(fmt.Sprintf("/:%s", pathID), gs.getScheduleV1Handler)
+		scheduleGroup.PATCH(fmt.Sprintf("/:%s", pathID), gs.patchScheduleV1Handler)
+		scheduleGroup.DELETE(fmt.Sprintf("/:%s", pathID), gs.deleteScheduleV1Handler)
+	}
+
+	// add job v1 handlers
+	jobGroup := rootGroup.Group("/v1/job")
+	{
+		jobGroup.GET("", gs.listJobV1Handler)
+		jobGroup.POST("", gs.createJobV1Handler)
+		jobGroup.GET(fmt.Sprintf("/:%s", pathID), gs.getJobV1Handler)
+		jobGroup.PATCH(fmt.Sprintf("/:%s", pathID), gs.patchJobV1Handler)
+		jobGroup.DELETE(fmt.Sprintf("/:%s", pathID), gs.deleteJobV1Handler)
 	}
 }
 
@@ -170,5 +194,69 @@ func (gs *GinServer) deleteStaffV1Handler(c *gin.Context) {
 		cornerstone.FromCodeErrorWithStatus(c, cornerstone.FromNativeError(err))
 		return
 	}
+	cornerstone.DoneWithStatus(c, nil)
+}
+
+// schedule v1 handlers
+
+func (gs *GinServer) createScheduleV1Handler(c *gin.Context) {
+	funcName := "createScheduleV1Handler"
+	cornerstone.Debugf(ctx, "[%s] triggered", funcName)
+	cornerstone.DoneWithStatus(c, nil)
+}
+
+func (gs *GinServer) getScheduleV1Handler(c *gin.Context) {
+	funcName := "getScheduleV1Handler"
+	cornerstone.Debugf(ctx, "[%s] triggered", funcName)
+	cornerstone.DoneWithStatus(c, nil)
+}
+
+func (gs *GinServer) listScheduleV1Handler(c *gin.Context) {
+	funcName := "listScheduleV1Handler"
+	cornerstone.Debugf(ctx, "[%s] triggered", funcName)
+	cornerstone.DoneWithStatus(c, nil)
+}
+
+func (gs *GinServer) patchScheduleV1Handler(c *gin.Context) {
+	funcName := "patchScheduleV1Handler"
+	cornerstone.Debugf(ctx, "[%s] triggered", funcName)
+	cornerstone.DoneWithStatus(c, nil)
+}
+
+func (gs *GinServer) deleteScheduleV1Handler(c *gin.Context) {
+	funcName := "deleteScheduleV1Handler"
+	cornerstone.Debugf(ctx, "[%s] triggered", funcName)
+	cornerstone.DoneWithStatus(c, nil)
+}
+
+// job v1 handlers
+
+func (gs *GinServer) createJobV1Handler(c *gin.Context) {
+	funcName := "createJobV1Handler"
+	cornerstone.Debugf(ctx, "[%s] triggered", funcName)
+	cornerstone.DoneWithStatus(c, nil)
+}
+
+func (gs *GinServer) getJobV1Handler(c *gin.Context) {
+	funcName := "getJobV1Handler"
+	cornerstone.Debugf(ctx, "[%s] triggered", funcName)
+	cornerstone.DoneWithStatus(c, nil)
+}
+
+func (gs *GinServer) listJobV1Handler(c *gin.Context) {
+	funcName := "listJobV1Handler"
+	cornerstone.Debugf(ctx, "[%s] triggered", funcName)
+	cornerstone.DoneWithStatus(c, nil)
+}
+
+func (gs *GinServer) patchJobV1Handler(c *gin.Context) {
+	funcName := "patchJobV1Handler"
+	cornerstone.Debugf(ctx, "[%s] triggered", funcName)
+	cornerstone.DoneWithStatus(c, nil)
+}
+
+func (gs *GinServer) deleteJobV1Handler(c *gin.Context) {
+	funcName := "deleteJobV1Handler"
+	cornerstone.Debugf(ctx, "[%s] triggered", funcName)
 	cornerstone.DoneWithStatus(c, nil)
 }
