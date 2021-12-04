@@ -73,7 +73,7 @@ func (gs *GinServer) initRoutings() {
 		rootGroup.GET("/version", gs.version)
 	}
 
-	// add v1 handlers
+	// add staff v1 handlers
 	staffGroup := rootGroup.Group("/v1/staff")
 	{
 		staffGroup.GET("", gs.listStaffV1Handler)
@@ -91,6 +91,8 @@ func (gs *GinServer) version(c *gin.Context) {
 func (gs *GinServer) config(c *gin.Context) {
 	c.JSON(http.StatusOK, viper.AllSettings())
 }
+
+// staff v1 handlers
 
 func (gs *GinServer) createStaffV1Handler(c *gin.Context) {
 	input := &domainv1.CreateStaffV1ServiceRequest{}
