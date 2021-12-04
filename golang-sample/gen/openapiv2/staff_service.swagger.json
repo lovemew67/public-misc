@@ -91,6 +91,37 @@
     },
     "/v1/staff/{id}": {
       "get": {
+        "summary": "Get a staff by their ID",
+        "description": "Gets a staff from the server.",
+        "operationId": "StaffServiceV1_GetStaffV1",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/protoGetStaffV1Response"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Staff"
+        ],
+        "security": []
+      },
+      "delete": {
         "summary": "Deletes a staff by their ID",
         "description": "Deletes a staff from the server.",
         "operationId": "StaffServiceV1_DeleteStaffV1",
