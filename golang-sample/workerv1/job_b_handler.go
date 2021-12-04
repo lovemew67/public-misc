@@ -13,7 +13,7 @@ func typeBJobHandle(ctx cornerstone.Context, job *domainv1.Job) {
 	var err error
 	switch job.Status {
 	default:
-		cornerstone.Errorf(ctx, "[%s] unsupport job status: %d, id: %d", funcName, job.Status, job.ID)
+		cornerstone.Errorf(ctx, "[%s] unsupport job status: %d, id: %s", funcName, job.Status, job.ID)
 	}
 	if err != nil {
 		removeFromJobQueue(ctx, job, err)

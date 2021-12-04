@@ -12,8 +12,9 @@ const (
 )
 
 const (
-	staffV1TableName = "staff_v1"
-	jobV1TableName   = "job_v1"
+	staffV1TableName    = "staff_v1"
+	jobV1TableName      = "job_v1"
+	scheduleV1TableName = "schedule_v1"
 )
 
 const (

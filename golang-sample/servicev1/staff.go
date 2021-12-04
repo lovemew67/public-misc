@@ -6,6 +6,10 @@ import (
 	"github.com/lovemew67/public-misc/golang-sample/repositoryv1"
 )
 
+var (
+	_ StaffV1Service = &StaffV1Servicer{}
+)
+
 type StaffV1Servicer struct {
 	r repositoryv1.StaffV1Repository
 }

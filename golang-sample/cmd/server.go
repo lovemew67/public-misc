@@ -56,7 +56,11 @@ func NewAPIServerCmd() *cobra.Command {
 			if errRepository != nil {
 				cornerstone.Panicf(systemCtx, "[%s] failed to create staff v1 repositiory, err: %+v", funcName, errRepository)
 			}
-			_, errRepository = sqlite.NewJobV1SQLiteRepositorier(systemCtx)
+			jovV1Repositorier, errRepository := sqlite.NewJobV1SQLiteRepositorier(systemCtx)
+			if errRepository != nil {
+				cornerstone.Panicf(systemCtx, "[%s] failed to create job v1 repositiory, err: %+v", funcName, errRepository)
+			}
+			scheduleV1Repositorier, errRepository := sqlite.NewScheduleV1SQLiteRepositorier(systemCtx)
 			if errRepository != nil {
 				cornerstone.Panicf(systemCtx, "[%s] failed to create job v1 repositiory, err: %+v", funcName, errRepository)
 			}
@@ -73,7 +77,7 @@ func NewAPIServerCmd() *cobra.Command {
 			defer grpcCanceller()
 
 			// init http server
-			ginServer := controllerv1.InitGinServer(staffV1Service)
+			ginServer := controllerv1.InitGinServer(staffV1Service, jovV1Repositorier, scheduleV1Repositorier)
 			ginCanceller := controllerv1.HTTPListenAndServe(systemCtx, ginServer)
 			defer ginCanceller()
 

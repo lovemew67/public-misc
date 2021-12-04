@@ -5,9 +5,10 @@ import (
 	"time"
 )
 
-type Job struct {
-	ID int `json:"id" gorm:"column:id;primary_key"`
+// unlike mongo, sqlite index shared accross tables
 
+type Job struct {
+	ID           string `json:"id" gorm:"column:id;primary_key"`
 	CID          string `json:"cid"           gorm:"column:cid"`
 	InternalData string `json:"internalData"  gorm:"column:internal_data"`
 	RetryCount   int    `json:"retryCount"    gorm:"column:retry_count;index:retry_count"`
@@ -17,7 +18,8 @@ type Job struct {
 	Processing JobProcessStatus `json:"processing" grom:"column:processing;index:processing"`
 
 	CreatedAt time.Time `json:"createdAt" gorm:"column:created_at"`
-	UpdatedAt time.Time `json:"updatedAt" gorm:"column:updated_at;index:updated_at"`
+	UpdatedAt time.Time `json:"updatedAt" gorm:"column:updated_at"`
+	// UpdatedAt time.Time `json:"updatedAt" gorm:"column:updated_at;index:undated_at"`
 }
 
 type JobInternalData struct {

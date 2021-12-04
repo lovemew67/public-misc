@@ -9,6 +9,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/lovemew67/public-misc/cornerstone"
 	"github.com/lovemew67/public-misc/golang-sample/domainv1"
+	"github.com/lovemew67/public-misc/golang-sample/repositoryv1"
 	"github.com/lovemew67/public-misc/golang-sample/servicev1"
 	"github.com/spf13/viper"
 )
@@ -21,11 +22,15 @@ var (
 	ctx = cornerstone.NewContext()
 )
 
-func InitGinServer(_s servicev1.StaffV1Service) (gs *GinServer) {
+func InitGinServer(_ss servicev1.StaffV1Service, _jr repositoryv1.JobV1Repository, _sr repositoryv1.ScheduleV1Repository) (gs *GinServer) {
 	// create gin  server.
 	gin.SetMode(viper.GetString("rest.mode"))
 	gs = &GinServer{
-		s:      _s,
+		ss: _ss,
+
+		jr: _jr,
+		sr: _sr,
+
 		Engine: gin.New(),
 	}
 	gs.initRoutings()
@@ -62,7 +67,10 @@ func HTTPListenAndServe(ctx cornerstone.Context, gs *GinServer) (canceller func(
 }
 
 type GinServer struct {
-	s servicev1.StaffV1Service
+	ss servicev1.StaffV1Service
+
+	jr repositoryv1.JobV1Repository
+	sr repositoryv1.ScheduleV1Repository
 
 	*gin.Engine
 }
@@ -124,7 +132,7 @@ func (gs *GinServer) createStaffV1Handler(c *gin.Context) {
 		cornerstone.FromCodeErrorWithStatus(c, cornerstone.FromNativeError(errBind))
 		return
 	}
-	result, err := gs.s.CreateStaffV1Service(input)
+	result, err := gs.ss.CreateStaffV1Service(input)
 	if err != nil {
 		cornerstone.FromCodeErrorWithStatus(c, cornerstone.FromNativeError(err))
 		return
@@ -137,7 +145,7 @@ func (gs *GinServer) getStaffV1Handler(c *gin.Context) {
 	input := &domainv1.GetStaffV1ServiceRequest{
 		ID: staffID,
 	}
-	result, err := gs.s.GetStaffV1Service(input)
+	result, err := gs.ss.GetStaffV1Service(input)
 	if err != nil {
 		cornerstone.FromCodeErrorWithStatus(c, cornerstone.FromNativeError(err))
 		return
@@ -157,7 +165,7 @@ func (gs *GinServer) listStaffV1Handler(c *gin.Context) {
 	if input.Limit > 200 {
 		input.Limit = 200
 	}
-	results, total, err := gs.s.ListStaffV1Service(input)
+	results, total, err := gs.ss.ListStaffV1Service(input)
 	if err != nil {
 		cornerstone.FromCodeErrorWithStatus(c, cornerstone.FromNativeError(err))
 		return
@@ -176,7 +184,7 @@ func (gs *GinServer) patchStaffV1Handler(c *gin.Context) {
 	}
 	staffID := c.Param(pathID)
 	input.ID = staffID
-	err := gs.s.PatchStaffV1Service(input)
+	err := gs.ss.PatchStaffV1Service(input)
 	if err != nil {
 		cornerstone.FromCodeErrorWithStatus(c, cornerstone.FromNativeError(err))
 		return
@@ -189,7 +197,7 @@ func (gs *GinServer) deleteStaffV1Handler(c *gin.Context) {
 	input := &domainv1.DeleteStaffV1ServiceRequest{
 		ID: staffID,
 	}
-	err := gs.s.DeleteStaffV1Service(input)
+	err := gs.ss.DeleteStaffV1Service(input)
 	if err != nil {
 		cornerstone.FromCodeErrorWithStatus(c, cornerstone.FromNativeError(err))
 		return

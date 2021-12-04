@@ -2,27 +2,92 @@ package sqlite
 
 import (
 	"fmt"
+	"time"
 
+	"github.com/google/uuid"
 	"github.com/jinzhu/gorm"
 	"github.com/lovemew67/public-misc/cornerstone"
 	"github.com/lovemew67/public-misc/golang-sample/domainv1"
-	"github.com/lovemew67/public-misc/golang-sample/gen/go/proto"
+	"github.com/lovemew67/public-misc/golang-sample/repositoryv1"
 	"github.com/spf13/viper"
+)
+
+var (
+	_ repositoryv1.JobV1Repository = &JobV1SQLiteRepositorier{}
 )
 
 type JobV1SQLiteRepositorier struct{}
 
-// from scheduler or http handler
-func Insert(job domainv1.Job) error {
+func (s *JobV1SQLiteRepositorier) CreateJob(job *domainv1.Job) (result *domainv1.Job, err error) {
+	id := uuid.New().String()
+	job.ID = id
+	now := time.Now()
+	job.CreatedAt = now
+	job.UpdatedAt = now
 	db := sqlitedb
-	db = db.Create(&job)
-	err := db.Error
+	db = db.Create(job)
+	err = db.Error
+	if err != nil {
+		return
+	}
 
-	return err
+	result, err = s.GetJob(id)
+	return
+}
+
+func (s *JobV1SQLiteRepositorier) CountTotalJobs() (result int, err error) {
+	db := sqlitedb
+	db = db.Model(domainv1.Job{})
+	db = db.Count(&result)
+	err = db.Error
+	return
+}
+
+func (s *JobV1SQLiteRepositorier) GetJob(id string) (job *domainv1.Job, err error) {
+	jobList := make([]*domainv1.Job, 1)
+	db := sqlitedb
+	db = db.Where("id = ?", id)
+	db = db.Limit(1)
+	db = db.Find(&jobList)
+	err = db.Error
+	if len(jobList) != 0 {
+		job = jobList[0]
+	} else {
+		err = fmt.Errorf("not found")
+	}
+	return
+}
+
+func (s *JobV1SQLiteRepositorier) QueryAllJobsWithOffsetAndLimit(offset, limit int) (jobList []*domainv1.Job, err error) {
+	jobList = make([]*domainv1.Job, limit)
+	db := sqlitedb
+	db = db.Offset(offset)
+	db = db.Limit(limit)
+	db = db.Find(&jobList)
+	err = db.Error
+	return
+}
+
+func (s *JobV1SQLiteRepositorier) PatchJob(id string, job *domainv1.Job) (err error) {
+	now := time.Now()
+	job.UpdatedAt = now
+	db := sqlitedb
+	db = db.Model(domainv1.Job{ID: id})
+	db = db.Update(job)
+	err = db.Error
+	return
+}
+
+func (s *JobV1SQLiteRepositorier) DeleteJob(id string) (err error) {
+	job := domainv1.Job{ID: id}
+	db := sqlitedb
+	db = db.Delete(domainv1.Job{}, &job)
+	err = db.Error
+	return
 }
 
 // for dispatcher
-func QueryReadyTask() ([]domainv1.Job, error) {
+func (s *JobV1SQLiteRepositorier) QueryReadyTask() ([]domainv1.Job, error) {
 	tasks := make([]domainv1.Job, 1)
 
 	queryDelay := viper.GetInt("app.retry.delay")
@@ -46,7 +111,7 @@ func QueryReadyTask() ([]domainv1.Job, error) {
 	return tasks, err
 }
 
-func UpdateProcessStatusToOngoing(id int) error {
+func (s *JobV1SQLiteRepositorier) UpdateProcessStatusToOngoing(id int) error {
 	db := sqlitedb
 	db = db.Model(domainv1.Job{})
 	db = db.Where("id = ?", id)
@@ -58,7 +123,7 @@ func UpdateProcessStatusToOngoing(id int) error {
 	return err
 }
 
-func CancelTaskByID(id int) error {
+func (s *JobV1SQLiteRepositorier) CancelTaskByID(id int) error {
 	db := sqlitedb
 	db = db.Model(domainv1.Job{})
 	db = db.Where("id = ?", id)
@@ -72,7 +137,7 @@ func CancelTaskByID(id int) error {
 }
 
 // for task handler
-func RemoveFromTaskQueue(task *domainv1.Job) error {
+func (s *JobV1SQLiteRepositorier) RemoveFromTaskQueue(task *domainv1.Job) error {
 	db := sqlitedb
 	db = db.Model(domainv1.Job{})
 	db = db.Where("id = ?", task.ID)
@@ -86,7 +151,7 @@ func RemoveFromTaskQueue(task *domainv1.Job) error {
 	return err
 }
 
-func UpdateTaskStatusStillOngoing(task *domainv1.Job) error {
+func (s *JobV1SQLiteRepositorier) UpdateTaskStatusStillOngoing(task *domainv1.Job) error {
 	db := sqlitedb
 	db = db.Model(domainv1.Job{})
 	db = db.Where("id = ?", task.ID)
@@ -100,7 +165,7 @@ func UpdateTaskStatusStillOngoing(task *domainv1.Job) error {
 	return err
 }
 
-func UpdateTaskStatusToStopped(task *domainv1.Job) error {
+func (s *JobV1SQLiteRepositorier) UpdateTaskStatusToStopped(task *domainv1.Job) error {
 	db := sqlitedb
 	db = db.Model(domainv1.Job{})
 	db = db.Where("id = ?", task.ID)
@@ -131,14 +196,14 @@ func NewJobV1SQLiteRepositorier(ctx cornerstone.Context) (result *JobV1SQLiteRep
 	}
 	sqlitedb = db
 
-	task := &proto.StaffV1{}
-	if hasTable := sqlitedb.HasTable(task); hasTable {
+	job := &domainv1.Job{}
+	if hasTable := sqlitedb.HasTable(job); hasTable {
 		cornerstone.Infof(ctx, "[%s] continue to reuse the table: %s", funcName, jobV1TableName)
-		db.AutoMigrate(&proto.StaffV1{})
+		db.AutoMigrate(&domainv1.Job{})
 		return
 	}
 
-	if err = sqlitedb.CreateTable(task).Error; err != nil {
+	if err = sqlitedb.CreateTable(job).Error; err != nil {
 		return
 	}
 

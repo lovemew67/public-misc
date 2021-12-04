@@ -8,6 +8,11 @@ import (
 	"github.com/jinzhu/gorm"
 	"github.com/lovemew67/public-misc/cornerstone"
 	"github.com/lovemew67/public-misc/golang-sample/gen/go/proto"
+	"github.com/lovemew67/public-misc/golang-sample/repositoryv1"
+)
+
+var (
+	_ repositoryv1.StaffV1Repository = &StaffV1SQLiteRepositorier{}
 )
 
 type StaffV1SQLiteRepositorier struct{}
@@ -97,14 +102,14 @@ func NewStaffV1SQLiteRepositorier(ctx cornerstone.Context) (result *StaffV1SQLit
 	}
 	sqlitedb = db
 
-	task := &proto.StaffV1{}
-	if hasTable := sqlitedb.HasTable(task); hasTable {
+	staff := &proto.StaffV1{}
+	if hasTable := sqlitedb.HasTable(staff); hasTable {
 		cornerstone.Infof(ctx, "[%s] continue to reuse the table: %s", funcName, staffV1TableName)
 		db.AutoMigrate(&proto.StaffV1{})
 		return
 	}
 
-	if err = sqlitedb.CreateTable(task).Error; err != nil {
+	if err = sqlitedb.CreateTable(staff).Error; err != nil {
 		return
 	}
 
