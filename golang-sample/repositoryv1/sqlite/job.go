@@ -87,8 +87,8 @@ func (s *JobV1SQLiteRepositorier) DeleteJob(id string) (err error) {
 }
 
 // for dispatcher
-func (s *JobV1SQLiteRepositorier) QueryReadyTask() ([]domainv1.Job, error) {
-	tasks := make([]domainv1.Job, 1)
+func (s *JobV1SQLiteRepositorier) QueryReadyJobs(length int) ([]domainv1.Job, error) {
+	tasks := make([]domainv1.Job, length)
 
 	queryDelay := viper.GetInt("app.retry.delay")
 	maxRetryCount := viper.GetInt("app.retry.max_count")
@@ -104,14 +104,14 @@ func (s *JobV1SQLiteRepositorier) QueryReadyTask() ([]domainv1.Job, error) {
 
 	db := sqlitedb
 	db = db.Where(query)
-	db = db.Limit(1)
+	db = db.Limit(length)
 	db = db.Find(&tasks)
 	err := db.Error
 
 	return tasks, err
 }
 
-func (s *JobV1SQLiteRepositorier) UpdateProcessStatusToOngoing(id int) error {
+func (s *JobV1SQLiteRepositorier) UpdateProcessStatusToOngoing(id string) error {
 	db := sqlitedb
 	db = db.Model(domainv1.Job{})
 	db = db.Where("id = ?", id)
@@ -123,7 +123,7 @@ func (s *JobV1SQLiteRepositorier) UpdateProcessStatusToOngoing(id int) error {
 	return err
 }
 
-func (s *JobV1SQLiteRepositorier) CancelTaskByID(id int) error {
+func (s *JobV1SQLiteRepositorier) CancelJobByID(id string) error {
 	db := sqlitedb
 	db = db.Model(domainv1.Job{})
 	db = db.Where("id = ?", id)
@@ -137,7 +137,7 @@ func (s *JobV1SQLiteRepositorier) CancelTaskByID(id int) error {
 }
 
 // for task handler
-func (s *JobV1SQLiteRepositorier) RemoveFromTaskQueue(task *domainv1.Job) error {
+func (s *JobV1SQLiteRepositorier) RemoveFromJobQueue(task *domainv1.Job) error {
 	db := sqlitedb
 	db = db.Model(domainv1.Job{})
 	db = db.Where("id = ?", task.ID)
@@ -151,7 +151,7 @@ func (s *JobV1SQLiteRepositorier) RemoveFromTaskQueue(task *domainv1.Job) error 
 	return err
 }
 
-func (s *JobV1SQLiteRepositorier) UpdateTaskStatusStillOngoing(task *domainv1.Job) error {
+func (s *JobV1SQLiteRepositorier) UpdateJobStatusStillOngoing(task *domainv1.Job) error {
 	db := sqlitedb
 	db = db.Model(domainv1.Job{})
 	db = db.Where("id = ?", task.ID)
@@ -165,7 +165,7 @@ func (s *JobV1SQLiteRepositorier) UpdateTaskStatusStillOngoing(task *domainv1.Jo
 	return err
 }
 
-func (s *JobV1SQLiteRepositorier) UpdateTaskStatusToStopped(task *domainv1.Job) error {
+func (s *JobV1SQLiteRepositorier) UpdateJobStatusToStopped(task *domainv1.Job) error {
 	db := sqlitedb
 	db = db.Model(domainv1.Job{})
 	db = db.Where("id = ?", task.ID)

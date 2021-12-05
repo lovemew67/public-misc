@@ -15,9 +15,7 @@ func typeBJobHandle(ctx cornerstone.Context, job *domainv1.Job) {
 	default:
 		cornerstone.Errorf(ctx, "[%s] unsupport job status: %d, id: %s", funcName, job.Status, job.ID)
 	}
-	if err != nil {
-		removeFromJobQueue(ctx, job, err)
-	}
+	removeFromJobQueue(ctx, job, err)
 }
 
 func recoverTypeBJobHandle(ctx cornerstone.Context, job *domainv1.Job) {

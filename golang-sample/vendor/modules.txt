@@ -61,7 +61,7 @@ github.com/jinzhu/inflection
 github.com/json-iterator/go
 # github.com/leodido/go-urn v1.2.0
 github.com/leodido/go-urn
-# github.com/lovemew67/public-misc/cornerstone v0.0.0-20211126121849-916d18017651
+# github.com/lovemew67/public-misc/cornerstone v0.0.0-20211205115618-5137b94b41e9
 ## explicit
 github.com/lovemew67/public-misc/cornerstone
 # github.com/magiconair/properties v1.8.5

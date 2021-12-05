@@ -213,6 +213,12 @@ func (gs *GinServer) createJobV1Handler(c *gin.Context) {
 		cornerstone.FromCodeErrorWithStatus(c, cornerstone.FromNativeError(errBind))
 		return
 	}
+	if input.Job.Type < domainv1.JobTypeA || input.Job.Type > domainv1.JobTypeB {
+		cornerstone.FromCodeErrorWithStatus(c, cornerstone.NewCarrierCodeError(0, 0, "invalid type"))
+		return
+	}
+	input.Job.Status = domainv1.JobGeneralStatusReady.ToInt()
+	input.Job.Processing = domainv1.JobProcessStatusStopped
 	result, err := gs.jr.CreateJob(input.Job)
 	if err != nil {
 		cornerstone.FromCodeErrorWithStatus(c, cornerstone.FromNativeError(err))
@@ -303,6 +309,10 @@ func (gs *GinServer) createScheduleV1Handler(c *gin.Context) {
 	input := &domainv1.CreateScheduleV1Request{}
 	if errBind := c.ShouldBindJSON(input); errBind != nil {
 		cornerstone.FromCodeErrorWithStatus(c, cornerstone.FromNativeError(errBind))
+		return
+	}
+	if input.Schedule.Type < domainv1.JobTypeA || input.Schedule.Type > domainv1.JobTypeB {
+		cornerstone.FromCodeErrorWithStatus(c, cornerstone.NewCarrierCodeError(0, 0, "invalid type"))
 		return
 	}
 	result, err := gs.sr.CreateSchedule(input.Schedule)

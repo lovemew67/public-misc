@@ -8,6 +8,7 @@ import (
 
 	"github.com/lovemew67/public-misc/cornerstone"
 	"github.com/lovemew67/public-misc/golang-sample/domainv1"
+	"github.com/lovemew67/public-misc/golang-sample/repositoryv1"
 )
 
 const (
@@ -26,8 +27,16 @@ var (
 	jobTypeBWorkerQueue     chan *domainv1.Job
 )
 
-func InitAndBlocking(ctx cornerstone.Context, workerStop chan os.Signal) {
+var (
+	jr repositoryv1.JobV1Repository
+	sr repositoryv1.ScheduleV1Repository
+)
+
+func InitAndBlocking(ctx cornerstone.Context, _jr repositoryv1.JobV1Repository, _sr repositoryv1.ScheduleV1Repository, workerStop chan os.Signal) {
 	funcName := "workerv1.InitAndBlocking"
+
+	jr = _jr
+	sr = _sr
 
 	// validate config
 	dispatcherCheckInterval := 10 * time.Second
@@ -112,10 +121,13 @@ func updateInternalDataFailedReasons(ctx cornerstone.Context, job *domainv1.Job,
 
 func removeFromJobQueue(ctx cornerstone.Context, job *domainv1.Job, err error) {
 	funcName := "removeFromJobQueue"
-	if err := updateInternalDataFailedReasons(ctx, job, err.Error()); err != nil {
-		cornerstone.Errorf(ctx, "[%s] failed to update internal data for job: %+v, err: %+v", funcName, job, err)
+	if err != nil {
+		errUpdate := updateInternalDataFailedReasons(ctx, job, err.Error())
+		if errUpdate != nil {
+			cornerstone.Errorf(ctx, "[%s] failed to update internal data for job: %+v, err: %+v", funcName, job, errUpdate)
+		}
 	}
-	// if err := repositoryv2.RemoveFromTaskQueue(job); err != nil {
-	// 	cornerstone.Errorf(ctx, "[%s] failed to remove job: %+v, from queue, err: %+v", funcName, job, err)
-	// }
+	if err := jr.RemoveFromJobQueue(job); err != nil {
+		cornerstone.Errorf(ctx, "[%s] failed to remove job: %+v, from queue, err: %+v", funcName, job, err)
+	}
 }

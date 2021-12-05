@@ -9,7 +9,7 @@ require (
 	github.com/google/uuid v1.2.0
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.6.0
 	github.com/jinzhu/gorm v1.9.16
-	github.com/lovemew67/public-misc/cornerstone v0.0.0-20211126121849-916d18017651
+	github.com/lovemew67/public-misc/cornerstone v0.0.0-20211205115618-5137b94b41e9
 	github.com/rs/cors v1.8.0
 	github.com/spf13/cobra v1.2.1
 	github.com/spf13/viper v1.9.0

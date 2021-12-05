@@ -22,13 +22,13 @@ type JobV1Repository interface {
 	PatchJob(string, *domainv1.Job) error
 	DeleteJob(string) error
 
-	QueryReadyTask() ([]domainv1.Job, error)
-	UpdateProcessStatusToOngoing(id int) error
-	CancelTaskByID(id int) error
+	QueryReadyJobs(int) ([]domainv1.Job, error)
+	UpdateProcessStatusToOngoing(id string) error
+	CancelJobByID(id string) error
 
-	RemoveFromTaskQueue(task *domainv1.Job) error
-	UpdateTaskStatusStillOngoing(task *domainv1.Job) error
-	UpdateTaskStatusToStopped(task *domainv1.Job) error
+	RemoveFromJobQueue(task *domainv1.Job) error
+	UpdateJobStatusStillOngoing(task *domainv1.Job) error
+	UpdateJobStatusToStopped(task *domainv1.Job) error
 }
 
 type ScheduleV1Repository interface {
