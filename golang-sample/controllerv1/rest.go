@@ -205,66 +205,183 @@ func (gs *GinServer) deleteStaffV1Handler(c *gin.Context) {
 	cornerstone.DoneWithStatus(c, nil)
 }
 
-// schedule v1 handlers
-
-func (gs *GinServer) createScheduleV1Handler(c *gin.Context) {
-	funcName := "createScheduleV1Handler"
-	cornerstone.Debugf(ctx, "[%s] triggered", funcName)
-	cornerstone.DoneWithStatus(c, nil)
-}
-
-func (gs *GinServer) getScheduleV1Handler(c *gin.Context) {
-	funcName := "getScheduleV1Handler"
-	cornerstone.Debugf(ctx, "[%s] triggered", funcName)
-	cornerstone.DoneWithStatus(c, nil)
-}
-
-func (gs *GinServer) listScheduleV1Handler(c *gin.Context) {
-	funcName := "listScheduleV1Handler"
-	cornerstone.Debugf(ctx, "[%s] triggered", funcName)
-	cornerstone.DoneWithStatus(c, nil)
-}
-
-func (gs *GinServer) patchScheduleV1Handler(c *gin.Context) {
-	funcName := "patchScheduleV1Handler"
-	cornerstone.Debugf(ctx, "[%s] triggered", funcName)
-	cornerstone.DoneWithStatus(c, nil)
-}
-
-func (gs *GinServer) deleteScheduleV1Handler(c *gin.Context) {
-	funcName := "deleteScheduleV1Handler"
-	cornerstone.Debugf(ctx, "[%s] triggered", funcName)
-	cornerstone.DoneWithStatus(c, nil)
-}
-
 // job v1 handlers
 
 func (gs *GinServer) createJobV1Handler(c *gin.Context) {
-	funcName := "createJobV1Handler"
-	cornerstone.Debugf(ctx, "[%s] triggered", funcName)
-	cornerstone.DoneWithStatus(c, nil)
+	input := &domainv1.CreateJobV1Request{}
+	if errBind := c.ShouldBindJSON(input); errBind != nil {
+		cornerstone.FromCodeErrorWithStatus(c, cornerstone.FromNativeError(errBind))
+		return
+	}
+	result, err := gs.jr.CreateJob(input.Job)
+	if err != nil {
+		cornerstone.FromCodeErrorWithStatus(c, cornerstone.FromNativeError(err))
+		return
+	}
+	cornerstone.DoneWithStatus(c, result)
 }
 
 func (gs *GinServer) getJobV1Handler(c *gin.Context) {
-	funcName := "getJobV1Handler"
-	cornerstone.Debugf(ctx, "[%s] triggered", funcName)
-	cornerstone.DoneWithStatus(c, nil)
+	jobID := c.Param(pathID)
+	result, err := gs.jr.GetJob(jobID)
+	if err != nil {
+		cornerstone.FromCodeErrorWithStatus(c, cornerstone.FromNativeError(err))
+		return
+	}
+	cornerstone.DoneWithStatus(c, result)
 }
 
 func (gs *GinServer) listJobV1Handler(c *gin.Context) {
-	funcName := "listJobV1Handler"
-	cornerstone.Debugf(ctx, "[%s] triggered", funcName)
-	cornerstone.DoneWithStatus(c, nil)
+	input := &domainv1.ListJobV1Request{}
+	if errBind := c.BindQuery(&input); errBind != nil {
+		cornerstone.FromCodeErrorWithStatus(c, cornerstone.FromNativeError(errBind))
+		return
+	}
+	if input.Limit <= 0 {
+		input.Limit = 10
+	}
+	if input.Limit > 200 {
+		input.Limit = 200
+	}
+	total, err := gs.jr.CountTotalJobs()
+	if err != nil {
+		cornerstone.FromCodeErrorWithStatus(c, cornerstone.FromNativeError(err))
+		return
+	}
+	results, err := gs.jr.QueryAllJobsWithOffsetAndLimit(input.Offset, input.Limit)
+	if err != nil {
+		cornerstone.FromCodeErrorWithStatus(c, cornerstone.FromNativeError(err))
+		return
+	}
+	cornerstone.DoneWithStatus(c, gin.H{
+		"staff": results,
+		"total": total,
+	})
 }
 
 func (gs *GinServer) patchJobV1Handler(c *gin.Context) {
-	funcName := "patchJobV1Handler"
-	cornerstone.Debugf(ctx, "[%s] triggered", funcName)
+	input := &domainv1.PatchJobV1Request{}
+	if errBind := c.ShouldBindJSON(input); errBind != nil {
+		cornerstone.FromCodeErrorWithStatus(c, cornerstone.FromNativeError(errBind))
+		return
+	}
+	jobID := c.Param(pathID)
+	updater := &domainv1.Job{}
+	if input.RetryCount != nil {
+		updater.RetryCount = *input.RetryCount
+	}
+	if input.Status != nil {
+		updater.Status = *input.Status
+	}
+	if input.Type != nil {
+		updater.Type = *input.Type
+	}
+	if input.Processing != nil {
+		updater.Processing = *input.Processing
+	}
+	err := gs.jr.PatchJob(jobID, updater)
+	if err != nil {
+		cornerstone.FromCodeErrorWithStatus(c, cornerstone.FromNativeError(err))
+		return
+	}
 	cornerstone.DoneWithStatus(c, nil)
 }
 
 func (gs *GinServer) deleteJobV1Handler(c *gin.Context) {
-	funcName := "deleteJobV1Handler"
-	cornerstone.Debugf(ctx, "[%s] triggered", funcName)
+	jobID := c.Param(pathID)
+	err := gs.jr.DeleteJob(jobID)
+	if err != nil {
+		cornerstone.FromCodeErrorWithStatus(c, cornerstone.FromNativeError(err))
+		return
+	}
+	cornerstone.DoneWithStatus(c, nil)
+}
+
+// schedule v1 handlers
+
+func (gs *GinServer) createScheduleV1Handler(c *gin.Context) {
+	input := &domainv1.CreateScheduleV1Request{}
+	if errBind := c.ShouldBindJSON(input); errBind != nil {
+		cornerstone.FromCodeErrorWithStatus(c, cornerstone.FromNativeError(errBind))
+		return
+	}
+	result, err := gs.sr.CreateSchedule(input.Schedule)
+	if err != nil {
+		cornerstone.FromCodeErrorWithStatus(c, cornerstone.FromNativeError(err))
+		return
+	}
+	cornerstone.DoneWithStatus(c, result)
+}
+
+func (gs *GinServer) getScheduleV1Handler(c *gin.Context) {
+	scheduleID := c.Param(pathID)
+	result, err := gs.sr.GetSchedule(scheduleID)
+	if err != nil {
+		cornerstone.FromCodeErrorWithStatus(c, cornerstone.FromNativeError(err))
+		return
+	}
+	cornerstone.DoneWithStatus(c, result)
+}
+
+func (gs *GinServer) listScheduleV1Handler(c *gin.Context) {
+	input := &domainv1.ListScheduleV1Request{}
+	if errBind := c.BindQuery(&input); errBind != nil {
+		cornerstone.FromCodeErrorWithStatus(c, cornerstone.FromNativeError(errBind))
+		return
+	}
+	if input.Limit <= 0 {
+		input.Limit = 10
+	}
+	if input.Limit > 200 {
+		input.Limit = 200
+	}
+	total, err := gs.sr.CountTotalSchedules()
+	if err != nil {
+		cornerstone.FromCodeErrorWithStatus(c, cornerstone.FromNativeError(err))
+		return
+	}
+	results, err := gs.sr.QueryAllSchedulesWithOffsetAndLimit(input.Offset, input.Limit)
+	if err != nil {
+		cornerstone.FromCodeErrorWithStatus(c, cornerstone.FromNativeError(err))
+		return
+	}
+	cornerstone.DoneWithStatus(c, gin.H{
+		"staff": results,
+		"total": total,
+	})
+}
+
+func (gs *GinServer) patchScheduleV1Handler(c *gin.Context) {
+	input := &domainv1.PatchScheduleV1Request{}
+	if errBind := c.ShouldBindJSON(input); errBind != nil {
+		cornerstone.FromCodeErrorWithStatus(c, cornerstone.FromNativeError(errBind))
+		return
+	}
+	scheduleID := c.Param(pathID)
+	updater := &domainv1.Schedule{}
+	if input.TimeInHourUTC != nil {
+		updater.TimeInHourUTC = *input.TimeInHourUTC
+	}
+	if input.Enable != nil {
+		updater.Enable = *input.Enable
+	}
+	if input.Type != nil {
+		updater.Type = *input.Type
+	}
+	err := gs.sr.PatchSchedule(scheduleID, updater)
+	if err != nil {
+		cornerstone.FromCodeErrorWithStatus(c, cornerstone.FromNativeError(err))
+		return
+	}
+	cornerstone.DoneWithStatus(c, nil)
+}
+
+func (gs *GinServer) deleteScheduleV1Handler(c *gin.Context) {
+	scheduleID := c.Param(pathID)
+	err := gs.sr.DeleteSchedule(scheduleID)
+	if err != nil {
+		cornerstone.FromCodeErrorWithStatus(c, cornerstone.FromNativeError(err))
+		return
+	}
 	cornerstone.DoneWithStatus(c, nil)
 }

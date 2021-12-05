@@ -5,11 +5,9 @@ import (
 )
 
 type Schedule struct {
-	ID             string     `json:"id" gorm:"column:id;primary_key"`
-	TimeInHourUTC  int        `json:"timeInHourUTC" gorm:"column:timeInHourUTC"`
-	Enable         bool       `json:"enable" gorm:"column:enable"`
-	LastJobID      *string    `json:"lastJobID,omitempty" gorm:"column:lastJobId"`
-	LastExecutedAt *time.Time `json:"lastExecutedAt,omitempty" gorm:"column:lastExecutedAt"`
+	ID            string `json:"id" gorm:"column:id;primary_key"`
+	TimeInHourUTC int    `json:"timeInHourUTC" gorm:"column:timeInHourUTC"`
+	Enable        bool   `json:"enable" gorm:"column:enable"`
 
 	Type JobType `json:"type" gorm:"column:type"`
 
