@@ -126,8 +126,14 @@ func removeFromJobQueue(ctx cornerstone.Context, job *domainv1.Job, err error) {
 		if errUpdate != nil {
 			cornerstone.Errorf(ctx, "[%s] failed to update internal data for job: %+v, err: %+v", funcName, job, errUpdate)
 		}
-	}
-	if err := jr.RemoveFromJobQueue(job); err != nil {
-		cornerstone.Errorf(ctx, "[%s] failed to remove job: %+v, from queue, err: %+v", funcName, job, err)
+		errRemove := jr.RemoveFromJobQueue(job)
+		if errRemove != nil {
+			cornerstone.Errorf(ctx, "[%s] failed to remove job: %+v, from queue, err: %+v", funcName, job, errRemove)
+		}
+	} else {
+		errUpdate := jr.UpdateJobStatusToStopped(job)
+		if errUpdate != nil {
+			cornerstone.Errorf(ctx, "[%s] failed to update job: %+v, to stopped, err: %+v", funcName, job, errUpdate)
+		}
 	}
 }

@@ -45,7 +45,7 @@ func InitScheduler(ctx cornerstone.Context, executeCycle ...time.Duration) *time
 func scheduleHandler(ctx cornerstone.Context) {
 	// list valid schedules
 	// for each schedule
-	//  block concurrent dispatching
+	//  block concurrent checking
 	//  do handling: (eg, insert job)
 	//  unblock
 }

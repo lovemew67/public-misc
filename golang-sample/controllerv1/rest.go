@@ -2,6 +2,7 @@ package controllerv1
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"time"
@@ -217,6 +218,12 @@ func (gs *GinServer) createJobV1Handler(c *gin.Context) {
 		cornerstone.FromCodeErrorWithStatus(c, cornerstone.NewCarrierCodeError(0, 0, "invalid type"))
 		return
 	}
+	internalData := domainv1.JobInternalData{
+		FailedReasons: map[int]string{},
+		Metadata:      map[string]interface{}{},
+	}
+	internalDataBytes, _ := json.Marshal(internalData)
+	input.Job.InternalData = string(internalDataBytes)
 	input.Job.Status = domainv1.JobGeneralStatusReady.ToInt()
 	input.Job.Processing = domainv1.JobProcessStatusStopped
 	result, err := gs.jr.CreateJob(input.Job)
