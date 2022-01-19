@@ -11,6 +11,7 @@ PKGPATH=github.com/lovemew67/public-misc/cornerstone
 # variables from shell
 GOPATH=$(shell env | grep GOPATH | cut -d'=' -f 2)
 REVISION=$(shell git rev-list -1 HEAD)
+BR=$(shell git rev-parse --abbrev-ref HEAD)
 TAG=$(shell git tag --sort=-version:refname --points-at HEAD | head -n1)
 DATE=$(shell date -u +"%Y-%m-%dT%H:%M:%SZ")
 THISDIR=$(dir $(abspath $(firstword $(MAKEFILE_LIST))))
@@ -67,3 +68,6 @@ runserver: updatevendor
 server: updatevendor
 	go install -mod=mod -v -ldflags "-s -X $(PKGPATH).appName=$(APP) -X $(PKGPATH).gitCommit=$(REVISION) -X $(PKGPATH).appVersion=$(TAG) -X $(PKGPATH).buildDate=$(DATE)" $(SOURCE) 
 	$(GOPATH)/bin/$(APP) server --config $(CONF)
+
+dockerbuild: updatevendor
+	docker build --build-arg APPNAME=$(APP) --build-arg GITVERSION=$(TAG) --build-arg GITREVISION=$(REVISION) --build-arg GITBRANCH=$(BR) -t lovemew67/golang-sample:latest .

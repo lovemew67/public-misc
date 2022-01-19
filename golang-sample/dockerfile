@@ -1,0 +1,30 @@
+FROM golang:1.16.4-alpine as builder
+ARG APPNAME
+ARG GITVERSION
+ARG GITBRANCH
+ARG GITREVISION
+WORKDIR /go/src/
+RUN apk --update upgrade && \
+    apk add --no-cache sqlite-libs sqlite-dev gcc build-base
+
+# Copy vendor first and build for cache layers
+ENV GO111MODULE=on
+COPY vendor vendor
+COPY go.mod .
+COPY go.sum .
+RUN CGO_ENABLED=1 CC=gcc GOOS=linux GOARCH=amd64 go install -mod=vendor --tags "libsqlite3 linux" -ldflags="-w -s" -v ./vendor/...
+
+# Copy source codes and build
+ENV PKGPATH=github.com/lovemew67/public-misc/cornerstone
+COPY . .
+RUN export BUILDDATE=$(date +"%Y-%m-%dT%H:%M:%SZ") && CGO_ENABLED=1 CC=gcc GOOS=linux GOARCH=amd64 go install -mod=vendor --tags "libsqlite3 linux" -ldflags="-w -s -X $PKGPATH.appName=$APPNAME -X $PKGPATH.gitCommit=$GITREVISION -X $PKGPATH.appVersion=$GITVERSION -X $PKGPATH.buildDate=$BUILDDATE -X $PKGPATH.gitBranch=$GITBRANCH" -v ./...
+
+# For minimal image
+FROM alpine:3.10
+RUN apk --update upgrade && \
+    apk --no-cache add ca-certificates sqlite-libs
+COPY --from=builder /go/bin/golang-sample .
+
+# Start up server
+COPY local.toml .
+CMD ["./golang-sample", "server", "--config", "./local.toml"]
