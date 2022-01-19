@@ -9,7 +9,7 @@ class HZBlogApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Howard Zhou - Backend Developer',
+      title: 'firecat.zhou',
       theme: ThemeData(
         primarySwatch: Colors.teal,
       ),
@@ -24,16 +24,6 @@ class HZBlogApp extends StatelessWidget {
 
 List<Widget> createList() {
   return [
-    Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        Flexible(
-          child: Image.asset(
-            'assets/images/rsz_background.jpg',
-          ),
-        ),
-      ],
-    ),
     Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
@@ -74,7 +64,7 @@ List<Widget> createList() {
           child: Container(
             padding: EdgeInsets.all(10),
             child: Text(
-              "Backend Engineer",
+              "Software Engineer",
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 20,
@@ -87,38 +77,23 @@ List<Widget> createList() {
     Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        Flexible(
-          child: Container(
-            padding: EdgeInsets.all(10),
-            child: Text(
-              "A backend developer, gopher from Taiwan, graduated from Information Management, National Taiwan University. Always have a passion for learning and trying out new things. \n\nSpecializing: golang, api developement, cloud-native application, cloud-oriented and micro service",
-              style: TextStyle(
-                fontSize: 15,
-              ),
-            ),
-            constraints: BoxConstraints(
-              maxWidth: 320.0,
-            ),
-          ),
-        ),
-      ],
-    ),
-    Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
         Container(
           padding: EdgeInsets.all(5),
           child: new InkWell(
               child: new Icon(FontAwesomeIcons.linkedin),
-              onTap: () => launch('https://www.linkedin.com/in/firecatzhou/')
-          ),
+              onTap: () => launch('https://www.linkedin.com/in/firecatzhou/')),
         ),
         Container(
           padding: EdgeInsets.all(5),
           child: new InkWell(
               child: new Icon(FontAwesomeIcons.github),
-              onTap: () => launch('https://github.com/lovemew67')
-          ),
+              onTap: () => launch('https://github.com/lovemew67')),
+        ),
+        Container(
+          padding: EdgeInsets.all(5),
+          child: new InkWell(
+              child: new Icon(FontAwesomeIcons.envelope),
+              onTap: () => launch('mailto:firecat.zhou@gmail.com')),
         ),
       ],
     ),
