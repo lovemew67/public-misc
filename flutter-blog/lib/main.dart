@@ -14,15 +14,19 @@ class HZBlogApp extends StatelessWidget {
         primarySwatch: Colors.teal,
       ),
       home: Scaffold(
-        body: ListView(
-          children: createList(),
+        body: Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: createRowList(),
+          ),
         ),
       ),
     );
   }
 }
 
-List<Widget> createList() {
+List<Widget> createRowList() {
   return [
     Row(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -77,6 +81,13 @@ List<Widget> createList() {
     Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
+        Container(
+          padding: EdgeInsets.all(5),
+          child: new InkWell(
+              child: new Icon(FontAwesomeIcons.file),
+              onTap: () => launch(
+                  'https://docs.google.com/document/d/1-s6AhGv09r_OF26UL5pKU5mvQngVoDux0O8Ty-t2b_Y/edit?usp=sharing')),
+        ),
         Container(
           padding: EdgeInsets.all(5),
           child: new InkWell(
