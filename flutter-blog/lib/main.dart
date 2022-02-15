@@ -85,8 +85,7 @@ List<Widget> createRowList() {
           padding: EdgeInsets.all(5),
           child: new InkWell(
               child: new Icon(FontAwesomeIcons.file),
-              onTap: () => launch(
-                  'https://docs.google.com/document/d/1-s6AhGv09r_OF26UL5pKU5mvQngVoDux0O8Ty-t2b_Y/edit?usp=sharing')),
+              onTap: () => launch('https://howardzhou.page.link/resume')),
         ),
         Container(
           padding: EdgeInsets.all(5),
