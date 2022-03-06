@@ -10,6 +10,7 @@ import (
 
 const (
 	opPing = "PING"
+	opPong = "PONG"
 	opSet  = "SET"
 	opGet  = "GET"
 	opDel  = "DEL"
@@ -65,11 +66,30 @@ func NewPool(conf *Config) (*Pool, error) {
 		},
 	}
 
-	return &Pool{
+	result := &Pool{
 		ctx,
 		pool,
 		conf,
-	}, nil
+	}
+	err := result.Ping()
+	if err != nil {
+		result = nil
+	}
+
+	return result, err
+}
+
+func (p *Pool) Ping() error {
+	c := p.pool.Get()
+	defer c.Close()
+	resp, err := redis.String(c.Do(opPing))
+	if err != nil {
+		return err
+	}
+	if resp != opPong {
+		return fmt.Errorf("err resp:%s", resp)
+	}
+	return nil
 }
 
 func (p *Pool) Set(key string, value interface{}) error {

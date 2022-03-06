@@ -68,12 +68,22 @@ func afterTest() {
 }
 
 func Test_All(t *testing.T) {
-	// test: pool init
+	// test: init incorrect pool
 	cfg := &Config{
-		Host:    fmt.Sprintf("localhost:%s", dockerResource.GetPort("6379/tcp")),
+		Host:    "localhost:9453",
 		RedisDB: 1,
 	}
 	pool, err := NewPool(cfg)
+	assert.Nil(t, pool)
+	assert.Error(t, err)
+
+	// test: init correct pool
+	cfg = &Config{
+		Host:    fmt.Sprintf("localhost:%s", dockerResource.GetPort("6379/tcp")),
+		RedisDB: 1,
+	}
+	pool, err = NewPool(cfg)
+	assert.NotNil(t, pool)
 	assert.NoError(t, err)
 
 	// test: get before set
