@@ -9,6 +9,7 @@ import (
 	"testing"
 
 	"github.com/ory/dockertest/v3"
+	"github.com/ory/dockertest/v3/docker"
 	"github.com/stretchr/testify/assert"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
@@ -29,7 +30,7 @@ func beforeTest() {
 	if err != nil {
 		panic("docker test init fail, error:" + err.Error())
 	}
-	opts := &dockertest.RunOptions{
+	runOpts := &dockertest.RunOptions{
 		Name:       "",
 		Repository: "mongo",
 		Tag:        "4.2",
@@ -38,11 +39,20 @@ func beforeTest() {
 			"MONGO_INITDB_ROOT_PASSWORD=password",
 		},
 	}
-	dockerResource, err = dockerPool.RunWithOptions(opts)
+	hcOpts := func(config *docker.HostConfig) {
+		config.AutoRemove = true
+		config.RestartPolicy = docker.RestartPolicy{
+			Name: "no",
+		}
+	}
+	dockerResource, err = dockerPool.RunWithOptions(runOpts, hcOpts)
 	if err != nil {
 		panic("mongodb docker init fail, error:" + err.Error())
 	}
-	_ = dockerResource.Expire(600)
+	err = dockerResource.Expire(600)
+	if err != nil {
+		panic("failed to set expire, err: " + err.Error())
+	}
 	err = dockerPool.Retry(func() error {
 		// test connection or setup
 		return nil
@@ -73,8 +83,9 @@ func TestMain(m *testing.M) {
 	log.SetFlags(log.LstdFlags)
 	log.SetOutput(os.Stderr)
 	beforeTest()
-	defer afterTest()
-	os.Exit(m.Run())
+	retCode := m.Run()
+	afterTest()
+	os.Exit(retCode)
 }
 
 func afterTest() {
