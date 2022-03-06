@@ -1,12 +1,14 @@
 package redis
 
 import (
+	"fmt"
 	"log"
 	"os"
 	"testing"
 
 	"github.com/ory/dockertest/v3"
 	"github.com/ory/dockertest/v3/docker"
+	"github.com/stretchr/testify/assert"
 )
 
 var (
@@ -50,8 +52,6 @@ func beforeTest() {
 	if err != nil {
 		panic("connect docker fail, error:" + err.Error())
 	}
-
-	// dockerResource.GetPort("27017/tcp")
 }
 
 func TestMain(m *testing.M) {
@@ -67,4 +67,39 @@ func afterTest() {
 	_ = dockerPool.Purge(dockerResource)
 }
 
-func Test_All(t *testing.T) {}
+func Test_All(t *testing.T) {
+	// test: pool init
+	cfg := &Config{
+		Host:    fmt.Sprintf("localhost:%s", dockerResource.GetPort("6379/tcp")),
+		RedisDB: 1,
+	}
+	pool, err := NewPool(cfg)
+	assert.NoError(t, err)
+
+	// test: get before set
+	testKey := "test-key"
+	value, err := pool.GetBytes(testKey)
+	assert.Error(t, err)
+	assert.Equal(t, "redigo: nil returned", err.Error())
+	assert.Equal(t, 0, len(value))
+
+	// test: set
+	testValue := "test-value"
+	err = pool.Set(testKey, testValue)
+	assert.NoError(t, err)
+
+	// test: get after set
+	value, err = pool.GetBytes(testKey)
+	assert.NoError(t, err)
+	assert.Equal(t, testValue, string(value))
+
+	// test: delete
+	err = pool.Delete(testKey)
+	assert.NoError(t, err)
+
+	// test: get after delete
+	value, err = pool.GetBytes(testKey)
+	assert.Error(t, err)
+	assert.Equal(t, "redigo: nil returned", err.Error())
+	assert.Equal(t, 0, len(value))
+}

@@ -74,9 +74,12 @@ func beforeTest() {
 	}
 
 	// setup data
-	_, _ = client.Database("database").Collection("collection").InsertOne(context.Background(), bson.M{
+	_, err = client.Database("database").Collection("collection").InsertOne(context.Background(), bson.M{
 		"id": "aaa",
 	})
+	if err != nil {
+		panic("prepare data fail, error:" + err.Error())
+	}
 }
 
 func TestMain(m *testing.M) {
