@@ -47,7 +47,12 @@ func beforeTest() {
 	}
 	err = dockerPool.Retry(func() error {
 		// test connection or setup
-		return nil
+		var errNew error
+		_, errNew = NewPool(&Config{
+			Host:    fmt.Sprintf("localhost:%s", dockerResource.GetPort("6379/tcp")),
+			RedisDB: 1,
+		})
+		return errNew
 	})
 	if err != nil {
 		panic("connect docker fail, error:" + err.Error())
@@ -86,26 +91,46 @@ func Test_All(t *testing.T) {
 	assert.NotNil(t, pool)
 	assert.NoError(t, err)
 
-	// test: get before set
+	// test: exist before set
 	testKey := "test-key"
+	exist, err := pool.Exists(testKey)
+	assert.NoError(t, err)
+	assert.False(t, exist)
+
+	// test: get before set
+
 	value, err := pool.GetBytes(testKey)
 	assert.Error(t, err)
 	assert.Equal(t, "redigo: nil returned", err.Error())
 	assert.Equal(t, 0, len(value))
+
+	// test: delete before set
+	err = pool.Delete(testKey)
+	assert.Error(t, err)
 
 	// test: set
 	testValue := "test-value"
 	err = pool.Set(testKey, testValue)
 	assert.NoError(t, err)
 
+	// test: exist after set
+	exist, err = pool.Exists(testKey)
+	assert.NoError(t, err)
+	assert.True(t, exist)
+
 	// test: get after set
 	value, err = pool.GetBytes(testKey)
 	assert.NoError(t, err)
 	assert.Equal(t, testValue, string(value))
 
-	// test: delete
+	// test: delete after set
 	err = pool.Delete(testKey)
 	assert.NoError(t, err)
+
+	// test: exist after delete
+	exist, err = pool.Exists(testKey)
+	assert.NoError(t, err)
+	assert.False(t, exist)
 
 	// test: get after delete
 	value, err = pool.GetBytes(testKey)

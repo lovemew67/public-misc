@@ -9,12 +9,13 @@ import (
 )
 
 const (
-	opPing = "PING"
-	opPong = "PONG"
-	opSet  = "SET"
-	opGet  = "GET"
-	opDel  = "DEL"
-	opOk   = "OK"
+	opPing   = "PING"
+	opPong   = "PONG"
+	opSet    = "SET"
+	opGet    = "GET"
+	opDel    = "DEL"
+	opOk     = "OK"
+	opExists = "EXISTS"
 )
 
 type Config struct {
@@ -123,4 +124,11 @@ func (p *Pool) Delete(key string) error {
 		return fmt.Errorf("err resp:%d", resp)
 	}
 	return nil
+}
+
+func (p *Pool) Exists(key string) (value bool, err error) {
+	c := p.pool.Get()
+	defer c.Close()
+	value, err = redis.Bool(c.Do(opExists, key))
+	return
 }
