@@ -85,25 +85,29 @@ List<Widget> createRowList() {
           padding: EdgeInsets.all(5),
           child: new InkWell(
               child: new Icon(FontAwesomeIcons.file),
-              onTap: () => launch('https://howardzhou.page.link/resume')),
+              onTap: () =>
+                  launchUrl(Uri.parse('https://howardzhou.page.link/resume'))),
         ),
         Container(
           padding: EdgeInsets.all(5),
           child: new InkWell(
               child: new Icon(FontAwesomeIcons.linkedin),
-              onTap: () => launch('https://www.linkedin.com/in/firecatzhou/')),
+              onTap: () => launchUrl(
+                  Uri.parse('https://www.linkedin.com/in/firecatzhou/'))),
         ),
         Container(
           padding: EdgeInsets.all(5),
           child: new InkWell(
               child: new Icon(FontAwesomeIcons.github),
-              onTap: () => launch('https://github.com/lovemew67')),
+              onTap: () =>
+                  launchUrl(Uri.parse('https://github.com/lovemew67'))),
         ),
         Container(
           padding: EdgeInsets.all(5),
           child: new InkWell(
               child: new Icon(FontAwesomeIcons.envelope),
-              onTap: () => launch('mailto:firecat.zhou@gmail.com')),
+              onTap: () =>
+                  launchUrl(Uri.parse('mailto:firecat.zhou@gmail.com'))),
         ),
       ],
     ),
