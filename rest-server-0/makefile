@@ -32,7 +32,7 @@ server: vendor
 	$(GOPATH)/bin/$(APP) server --config $(CONF) 
 
 dockerbuild: vendor
-	docker build --build-arg APPNAME=$(APP) --build-arg GITVERSION=$(TAG) --build-arg GITREVISION=$(REVISION) --build-arg GITBRANCH=$(BR) -t lovemew67/watchtower-tester:v0.0.1 .
+	docker build --build-arg APPNAME=$(APP) --build-arg GITVERSION=$(TAG) --build-arg GITREVISION=$(REVISION) --build-arg GITBRANCH=$(BR) -t lovemew67/watchtower-tester:v0.0.2 .
 
 dockerpush: dockerbuild
 	docker push lovemew67/watchtower-tester:latest
