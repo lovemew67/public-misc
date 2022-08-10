@@ -36,3 +36,6 @@ dockerbuild: vendor
 
 dockerpush: dockerbuild
 	docker push lovemew67/watchtower-tester:latest
+
+# testing watchtower
+# 000
