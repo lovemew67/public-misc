@@ -1,0 +1,23 @@
+# Prepare builder
+FROM golang:1.15.6-alpine as builder
+WORKDIR /go/src/
+RUN apk --update upgrade && \
+    apk add --no-cache gcc build-base
+
+# Copy source codes and build
+COPY . .
+ARG APPNAME
+ARG GITVERSION
+ARG GITBRANCH
+ARG GITREVISION
+ENV PKGPATH=github.com/lovemew67/public-misc/cornerstone
+RUN export BUILDDATE=$(date +"%Y-%m-%dT%H:%M:%SZ") && CGO_ENABLED=1 CC=gcc GOOS=linux GOARCH=amd64 go install -mod=mod -ldflags="-w -s -X $PKGPATH.appName=$APPNAME -X $PKGPATH.gitCommit=$GITREVISION -X $PKGPATH.appVersion=$GITVERSION -X $PKGPATH.buildDate=$BUILDDATE -X $PKGPATH.gitBranch=$GITBRANCH" -v ./...
+
+# For minimal image
+FROM alpine:3.15
+RUN apk --no-cache add ca-certificates jq curl sqlite-libs
+
+# Init viper object
+COPY local.toml .
+COPY --from=builder /go/bin/rest-server-0 .
+CMD ./rest-server-0 server --config ./local.toml

@@ -30,3 +30,9 @@ vendor:
 server: vendor
 	go install -mod=mod -i -v -ldflags "-s -X $(PKGPATH).appName=$(APP) -X $(PKGPATH).gitCommit=$(REVISION) -X $(PKGPATH).appVersion=$(TAG) -X $(PKGPATH).buildDate=$(DATE)" $(SOURCE) 
 	$(GOPATH)/bin/$(APP) server --config $(CONF) 
+
+dockerbuild: vendor
+	docker build --build-arg APPNAME=$(APP) --build-arg GITVERSION=$(TAG) --build-arg GITREVISION=$(REVISION) --build-arg GITBRANCH=$(BR) -t lovemew67/watchtower-tester:latest .
+
+dockerpush: dockerbuild
+	docker push lovemew67/watchtower-tester:latest
